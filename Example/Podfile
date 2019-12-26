@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'LightningKit_Example' do
+  pod 'LightningKit', :path => '../'
+
+  target 'LightningKit_Tests' do
+    inherit! :search_paths
+
+    
+  end
+end
