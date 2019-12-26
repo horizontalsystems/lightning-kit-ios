@@ -1,11 +1,10 @@
+platform :ios, '11'
 use_frameworks!
 
-target 'LightningKit_Example' do
-  pod 'LightningKit', :path => '../'
+target 'LightningKitExample' do
+  pod 'LightningKit.swift', :path => '../'
+end
 
-  target 'LightningKit_Tests' do
-    inherit! :search_paths
-
-    
-  end
+target 'LightningKitTests' do
+  pod 'LightningKit.swift', :path => '../'
 end
