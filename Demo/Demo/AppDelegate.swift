@@ -10,7 +10,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window?.overrideUserInterfaceStyle = .light
         window?.backgroundColor = .white
-        window?.rootViewController = MainController()
+        window?.rootViewController = UINavigationController(rootViewController: MainController())
 
         return true
     }
