@@ -7,14 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11B35C4874CF231EA3E7E68D /* GuestKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352CF7DE26FFB87B568AC /* GuestKit.swift */; };
 		D011636C23CC97AB00578F38 /* LightningKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D011636A23CC97AB00578F38 /* LightningKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D011637923CC992500578F38 /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = D011637823CC992500578F38 /* GRPC */; };
+		D3A8070123CD92CF00BD50FB /* rpc.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A806FF23CD92CF00BD50FB /* rpc.grpc.swift */; };
+		D3A8070223CD92CF00BD50FB /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A8070023CD92CF00BD50FB /* rpc.pb.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11B352CF7DE26FFB87B568AC /* GuestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestKit.swift; sourceTree = "<group>"; };
 		D011636723CC97AB00578F38 /* LightningKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LightningKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D011636A23CC97AB00578F38 /* LightningKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightningKit.h; sourceTree = "<group>"; };
 		D011636B23CC97AB00578F38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D3A806FF23CD92CF00BD50FB /* rpc.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.grpc.swift; sourceTree = "<group>"; };
+		D3A8070023CD92CF00BD50FB /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -22,13 +27,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D011637923CC992500578F38 /* GRPC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11B351E2195B5A7B81386039 /* Proto */ = {
+			isa = PBXGroup;
+			children = (
+				D3A806FF23CD92CF00BD50FB /* rpc.grpc.swift */,
+				D3A8070023CD92CF00BD50FB /* rpc.pb.swift */,
+			);
+			path = Proto;
+			sourceTree = "<group>";
+		};
 		D011635D23CC97AB00578F38 = {
 			isa = PBXGroup;
 			children = (
@@ -48,8 +61,10 @@
 		D011636923CC97AB00578F38 /* LightningKit */ = {
 			isa = PBXGroup;
 			children = (
+				11B351E2195B5A7B81386039 /* Proto */,
 				D011636A23CC97AB00578F38 /* LightningKit.h */,
 				D011636B23CC97AB00578F38 /* Info.plist */,
+				11B352CF7DE26FFB87B568AC /* GuestKit.swift */,
 			);
 			path = LightningKit;
 			sourceTree = "<group>";
@@ -83,7 +98,7 @@
 			);
 			name = LightningKit;
 			packageProductDependencies = (
-				D011637823CC992500578F38 /* GRPC */,
+				D3A8070823CDC4E700BD50FB /* XCSwiftPackageProductDependency */,
 			);
 			productName = LightningKit;
 			productReference = D011636723CC97AB00578F38 /* LightningKit.framework */;
@@ -100,6 +115,7 @@
 				TargetAttributes = {
 					D011636623CC97AB00578F38 = {
 						CreatedOnToolsVersion = 11.3;
+						LastSwiftMigration = 1130;
 					};
 				};
 			};
@@ -113,7 +129,7 @@
 			);
 			mainGroup = D011635D23CC97AB00578F38;
 			packageReferences = (
-				D011637723CC992500578F38 /* XCRemoteSwiftPackageReference "grpc-swift" */,
+				D3A8070723CDC4E700BD50FB /* XCRemoteSwiftPackageReference */,
 			);
 			productRefGroup = D011636823CC97AB00578F38 /* Products */;
 			projectDirPath = "";
@@ -139,6 +155,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3A8070223CD92CF00BD50FB /* rpc.pb.swift in Sources */,
+				D3A8070123CD92CF00BD50FB /* rpc.grpc.swift in Sources */,
+				11B35C4874CF231EA3E7E68D /* GuestKit.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,6 +287,7 @@
 		D011637023CC97AB00578F38 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
@@ -285,6 +305,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -293,6 +314,7 @@
 		D011637123CC97AB00578F38 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = HC4MCAXJ66;
@@ -339,21 +361,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D011637723CC992500578F38 /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
+		D3A8070723CDC4E700BD50FB /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "git@github.com:grpc/grpc-swift.git";
+			repositoryURL = "https://github.com/grpc/grpc-swift";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = "1.0.0-alpha.9";
+				branch = master;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D011637823CC992500578F38 /* GRPC */ = {
+		D3A8070823CDC4E700BD50FB /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D011637723CC992500578F38 /* XCRemoteSwiftPackageReference "grpc-swift" */;
-			productName = GRPC;
+			package = D3A8070723CDC4E700BD50FB /* XCRemoteSwiftPackageReference */;
+			productName = SwiftGRPC;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
