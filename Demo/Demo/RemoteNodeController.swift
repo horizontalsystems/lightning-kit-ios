@@ -113,7 +113,7 @@ class RemoveNodeController: UIViewController {
         guard let certificate = certificateTextView.text, !certificate.isEmpty else { return }
         guard let macaroon = macaroonTextView.text, !macaroon.isEmpty else { return }
 
-//        GuestKit.testRemoteNode(address: address, certificate: certificate, macaroon: macaroon)
+        GuestKit.testRemoteNode(host: host, port: port, certificate: certificate, macaroon: macaroon)
     }
 
     private func configure(textField: UITextField) {
