@@ -48,6 +48,7 @@ class GuestController: UIViewController {
         button.layer.borderWidth = 1
         button.layer.borderColor = UIColor.darkGray.cgColor
 
+        button.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         button.setTitle(title, for: .normal)
         button.setTitleColor(.darkGray, for: .normal)
         button.setTitleColor(.lightGray, for: .highlighted)

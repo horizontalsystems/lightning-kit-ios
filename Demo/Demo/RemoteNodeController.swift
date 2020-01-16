@@ -3,7 +3,8 @@ import LightningKit
 import SnapKit
 
 class RemoveNodeController: UIViewController {
-    private let addressTextField = UITextField()
+    private let hostTextField = UITextField()
+    private let portTextField = UITextField()
     private let certificateTextView = UITextView()
     private let macaroonTextView = UITextView()
     private let connectButton = UIButton()
@@ -14,32 +15,44 @@ class RemoveNodeController: UIViewController {
         view.backgroundColor = .white
         title = "Connect to Remote Node"
 
-        let addressLabel = UILabel()
+        let hostLabel = UILabel()
+        let portLabel = UILabel()
         let certificateLabel = UILabel()
         let macaroonLabel = UILabel()
 
-        view.addSubview(addressLabel)
-        view.addSubview(addressTextField)
+        view.addSubview(hostLabel)
+        view.addSubview(hostTextField)
+        view.addSubview(portLabel)
+        view.addSubview(portTextField)
         view.addSubview(certificateLabel)
         view.addSubview(certificateTextView)
         view.addSubview(macaroonLabel)
         view.addSubview(macaroonTextView)
         view.addSubview(connectButton)
 
-        addressLabel.snp.makeConstraints { make in
+        hostLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
             make.top.equalTo(view.safeAreaLayoutGuide).offset(30)
         }
 
-        addressTextField.snp.makeConstraints { make in
+        hostTextField.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(addressLabel.snp.bottom).offset(10)
-            make.height.equalTo(30)
+            make.top.equalTo(hostLabel.snp.bottom).offset(10)
+        }
+
+        portLabel.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(hostTextField.snp.bottom).offset(20)
+        }
+
+        portTextField.snp.makeConstraints { make in
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.top.equalTo(portLabel.snp.bottom).offset(10)
         }
 
         certificateLabel.snp.makeConstraints { make in
             make.leading.trailing.equalToSuperview().inset(20)
-            make.top.equalTo(addressTextField.snp.bottom).offset(20)
+            make.top.equalTo(portTextField.snp.bottom).offset(20)
         }
 
         certificateTextView.snp.makeConstraints { make in
@@ -63,37 +76,54 @@ class RemoveNodeController: UIViewController {
             make.height.equalTo(50)
         }
 
-        addressLabel.text = "Address:"
-        certificateLabel.text = "Certificate:"
-        macaroonLabel.text = "Macaroon:"
-
-        addressTextField.layer.cornerRadius = 4
-        addressTextField.layer.borderWidth = 1
-        addressTextField.layer.borderColor = UIColor.lightGray.cgColor
+        hostLabel.text = "HOST:"
+        portLabel.text = "PORT:"
+        certificateLabel.text = "CERTIFICATE:"
+        macaroonLabel.text = "MACAROON:"
 
         connectButton.layer.cornerRadius = 12
         connectButton.layer.borderWidth = 1
         connectButton.layer.borderColor = UIColor.darkGray.cgColor
 
+        connectButton.titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
         connectButton.setTitle("Connect", for: .normal)
         connectButton.setTitleColor(.darkGray, for: .normal)
         connectButton.setTitleColor(.lightGray, for: .highlighted)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
+        configure(textField: hostTextField)
+        configure(textField: portTextField)
         configure(textView: certificateTextView)
         configure(textView: macaroonTextView)
 
-        addressTextField.text = Configuration.remoteNodeAddress
+        configure(label: hostLabel)
+        configure(label: portLabel)
+        configure(label: certificateLabel)
+        configure(label: macaroonLabel)
+
+        hostTextField.text = Configuration.remoteNodeHost
+        portTextField.text = String(Configuration.remoteNodePort)
         certificateTextView.text = Configuration.remoteNodeCertificate
         macaroonTextView.text = Configuration.remoteNodeMacaroon
     }
 
     @objc func onTapConnect() {
-        guard let address = addressTextField.text, !address.isEmpty else { return }
+        guard let host = hostTextField.text, !host.isEmpty else { return }
+        guard let portString = portTextField.text, let port = Int(portString) else { return }
         guard let certificate = certificateTextView.text, !certificate.isEmpty else { return }
         guard let macaroon = macaroonTextView.text, !macaroon.isEmpty else { return }
 
-        GuestKit.testRemoteNode(address: address, certificate: certificate, macaroon: macaroon)
+//        GuestKit.testRemoteNode(address: address, certificate: certificate, macaroon: macaroon)
+    }
+
+    private func configure(textField: UITextField) {
+        textField.layer.cornerRadius = 4
+        textField.layer.borderWidth = 1
+        textField.layer.borderColor = UIColor.lightGray.cgColor
+
+        textField.snp.makeConstraints { make in
+            make.height.equalTo(30)
+        }
     }
 
     private func configure(textView: UITextView) {
@@ -104,6 +134,11 @@ class RemoveNodeController: UIViewController {
         textView.snp.makeConstraints { make in
             make.height.equalTo(60)
         }
+    }
+
+    private func configure(label: UILabel) {
+        label.textColor = .gray
+        label.font = .systemFont(ofSize: 12, weight: .medium)
     }
 
 }
