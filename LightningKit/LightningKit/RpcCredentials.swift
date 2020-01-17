@@ -13,10 +13,13 @@ public struct RpcCredentials {
 
 }
 
+extension RpcCredentials: Codable {
+}
+
 extension RpcCredentials: CustomStringConvertible {
 
     public var description: String {
-        "[host: \(host); port: \(port)]"
+        "[host: \(host); port: \(port); certificate: \(certificate.count) char(s); macaroon: \(macaroon.count) char(s)]"
     }
 
 }

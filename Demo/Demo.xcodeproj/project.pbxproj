@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11B3529F0AAB2663511E63FE /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354C62C85F2E182686A25 /* App.swift */; };
+		11B353D1368523BDA608AE78 /* SecureStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352FCA4E9D22ECD200043 /* SecureStorage.swift */; };
+		11B354E91EA3DD9FE5FDF307 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359AF238D38EF31594003 /* UserDefaultsStorage.swift */; };
 		11B356F82472388E5D21847A /* Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350E2F616F96D4D56F720 /* Configuration.swift */; };
 		11B3572AA1E00ED1C10C7E39 /* GuestController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35AE3639078671881281D /* GuestController.swift */; };
 		11B35D505823473C6B1946E2 /* RemoteNodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356912BEAC2F227A74470 /* RemoteNodeController.swift */; };
+		11B35DF1AE34804376706BED /* ICodableStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B21204C2597A0CE2FED /* ICodableStorage.swift */; };
 		D011635323CC972400578F38 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D011635223CC972400578F38 /* Assets.xcassets */; };
 		D011637423CC97F900578F38 /* LightningKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D011637323CC97F900578F38 /* LightningKit.framework */; };
 		D011637523CC97F900578F38 /* LightningKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D011637323CC97F900578F38 /* LightningKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -34,8 +38,12 @@
 
 /* Begin PBXFileReference section */
 		11B350E2F616F96D4D56F720 /* Configuration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Configuration.swift; sourceTree = "<group>"; };
+		11B352FCA4E9D22ECD200043 /* SecureStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecureStorage.swift; sourceTree = "<group>"; };
+		11B354C62C85F2E182686A25 /* App.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
 		11B356912BEAC2F227A74470 /* RemoteNodeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNodeController.swift; sourceTree = "<group>"; };
+		11B359AF238D38EF31594003 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		11B35AE3639078671881281D /* GuestController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestController.swift; sourceTree = "<group>"; };
+		11B35B21204C2597A0CE2FED /* ICodableStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICodableStorage.swift; sourceTree = "<group>"; };
 		D011634623CC972200578F38 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D011635223CC972400578F38 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D011635723CC972400578F38 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -85,6 +93,10 @@
 				11B35AE3639078671881281D /* GuestController.swift */,
 				11B356912BEAC2F227A74470 /* RemoteNodeController.swift */,
 				11B350E2F616F96D4D56F720 /* Configuration.swift */,
+				11B359AF238D38EF31594003 /* UserDefaultsStorage.swift */,
+				11B35B21204C2597A0CE2FED /* ICodableStorage.swift */,
+				11B352FCA4E9D22ECD200043 /* SecureStorage.swift */,
+				11B354C62C85F2E182686A25 /* App.swift */,
 			);
 			path = Demo;
 			sourceTree = "<group>";
@@ -180,6 +192,10 @@
 				11B3572AA1E00ED1C10C7E39 /* GuestController.swift in Sources */,
 				11B35D505823473C6B1946E2 /* RemoteNodeController.swift in Sources */,
 				11B356F82472388E5D21847A /* Configuration.swift in Sources */,
+				11B354E91EA3DD9FE5FDF307 /* UserDefaultsStorage.swift in Sources */,
+				11B35DF1AE34804376706BED /* ICodableStorage.swift in Sources */,
+				11B353D1368523BDA608AE78 /* SecureStorage.swift in Sources */,
+				11B3529F0AAB2663511E63FE /* App.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
