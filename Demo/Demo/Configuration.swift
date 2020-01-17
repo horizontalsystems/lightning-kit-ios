@@ -1,6 +1,5 @@
+import LightningKit
+
 struct Configuration {
-    static let remoteNodeHost: String = ""
-    static let remoteNodePort: Int = 10009
-    static let remoteNodeCertificate: String = ""
-    static let remoteNodeMacaroon: String = ""
+    static let defaultRpcCredentials = RpcCredentials(host: "", port: 10009, certificate: "", macaroon: "")
 }

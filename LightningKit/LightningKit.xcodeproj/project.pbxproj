@@ -7,14 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11B357BB4BD04E517EF258F4 /* RpcCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351D28DB836B62FE5A489 /* RpcCredentials.swift */; };
 		11B35C4874CF231EA3E7E68D /* GuestKit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352CF7DE26FFB87B568AC /* GuestKit.swift */; };
 		D011636C23CC97AB00578F38 /* LightningKit.h in Headers */ = {isa = PBXBuildFile; fileRef = D011636A23CC97AB00578F38 /* LightningKit.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D0DFDA1C23D08B6400CCB65F /* GRPC in Frameworks */ = {isa = PBXBuildFile; productRef = D0DFDA1B23D08B6400CCB65F /* GRPC */; };
 		D0DFDA1F23D08BAF00CCB65F /* rpc.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DFDA1D23D08BAF00CCB65F /* rpc.grpc.swift */; };
 		D0DFDA2023D08BAF00CCB65F /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DFDA1E23D08BAF00CCB65F /* rpc.pb.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11B351D28DB836B62FE5A489 /* RpcCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RpcCredentials.swift; sourceTree = "<group>"; };
 		11B352CF7DE26FFB87B568AC /* GuestKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GuestKit.swift; sourceTree = "<group>"; };
 		D011636723CC97AB00578F38 /* LightningKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LightningKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D011636A23CC97AB00578F38 /* LightningKit.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LightningKit.h; sourceTree = "<group>"; };
@@ -28,7 +29,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D0DFDA1C23D08B6400CCB65F /* GRPC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,6 +67,7 @@
 				D011636A23CC97AB00578F38 /* LightningKit.h */,
 				D011636B23CC97AB00578F38 /* Info.plist */,
 				11B352CF7DE26FFB87B568AC /* GuestKit.swift */,
+				11B351D28DB836B62FE5A489 /* RpcCredentials.swift */,
 			);
 			path = LightningKit;
 			sourceTree = "<group>";
@@ -100,7 +101,7 @@
 			);
 			name = LightningKit;
 			packageProductDependencies = (
-				D0DFDA1B23D08B6400CCB65F /* GRPC */,
+				D0DFDA1B23D08B6400CCB65F /* XCSwiftPackageProductDependency */,
 			);
 			productName = LightningKit;
 			productReference = D011636723CC97AB00578F38 /* LightningKit.framework */;
@@ -131,7 +132,7 @@
 			);
 			mainGroup = D011635D23CC97AB00578F38;
 			packageReferences = (
-				D0DFDA1A23D08B6400CCB65F /* XCRemoteSwiftPackageReference "grpc-swift" */,
+				D0DFDA1A23D08B6400CCB65F /* XCRemoteSwiftPackageReference */,
 			);
 			productRefGroup = D011636823CC97AB00578F38 /* Products */;
 			projectDirPath = "";
@@ -160,6 +161,7 @@
 				D0DFDA1F23D08BAF00CCB65F /* rpc.grpc.swift in Sources */,
 				11B35C4874CF231EA3E7E68D /* GuestKit.swift in Sources */,
 				D0DFDA2023D08BAF00CCB65F /* rpc.pb.swift in Sources */,
+				11B357BB4BD04E517EF258F4 /* RpcCredentials.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +365,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D0DFDA1A23D08B6400CCB65F /* XCRemoteSwiftPackageReference "grpc-swift" */ = {
+		D0DFDA1A23D08B6400CCB65F /* XCRemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/grpc/grpc-swift";
 			requirement = {
@@ -374,9 +376,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D0DFDA1B23D08B6400CCB65F /* GRPC */ = {
+		D0DFDA1B23D08B6400CCB65F /* XCSwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D0DFDA1A23D08B6400CCB65F /* XCRemoteSwiftPackageReference "grpc-swift" */;
+			package = D0DFDA1A23D08B6400CCB65F /* XCRemoteSwiftPackageReference */;
 			productName = GRPC;
 		};
 /* End XCSwiftPackageProductDependency section */

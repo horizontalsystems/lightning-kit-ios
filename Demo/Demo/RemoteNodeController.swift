@@ -101,10 +101,10 @@ class RemoveNodeController: UIViewController {
         configure(label: certificateLabel)
         configure(label: macaroonLabel)
 
-        hostTextField.text = Configuration.remoteNodeHost
-        portTextField.text = String(Configuration.remoteNodePort)
-        certificateTextView.text = Configuration.remoteNodeCertificate
-        macaroonTextView.text = Configuration.remoteNodeMacaroon
+        hostTextField.text = Configuration.defaultRpcCredentials.host
+        portTextField.text = String(Configuration.defaultRpcCredentials.port)
+        certificateTextView.text = Configuration.defaultRpcCredentials.certificate
+        macaroonTextView.text = Configuration.defaultRpcCredentials.macaroon
     }
 
     @objc func onTapConnect() {
@@ -113,7 +113,9 @@ class RemoveNodeController: UIViewController {
         guard let certificate = certificateTextView.text, !certificate.isEmpty else { return }
         guard let macaroon = macaroonTextView.text, !macaroon.isEmpty else { return }
 
-        GuestKit.testRemoteNode(host: host, port: port, certificate: certificate, macaroon: macaroon)
+        let credentials = RpcCredentials(host: host, port: port, certificate: certificate, macaroon: macaroon)
+
+        GuestKit.testRemoteNode(credentials: credentials)
     }
 
     private func configure(textField: UITextField) {
