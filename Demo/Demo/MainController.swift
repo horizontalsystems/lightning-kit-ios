@@ -1,17 +1,19 @@
 import UIKit
 
-class MainController: UIViewController {
+class MainController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(showInfo))
+        let infoController = UINavigationController(rootViewController: InfoController())
+        infoController.tabBarItem.title = "Info"
+        infoController.tabBarItem.image = UIImage(systemName: "info.circle")
 
-        print("DID LOAD")
-    }
+        let channelsController = UINavigationController(rootViewController: ChannelsController())
+        channelsController.tabBarItem.title = "Channels"
+        channelsController.tabBarItem.image = UIImage(systemName: "arrow.up.left.and.arrow.down.right")
 
-    @objc func showInfo() {
-        print("SHOW INFO:")
+        viewControllers = [infoController, channelsController]
     }
 
 }

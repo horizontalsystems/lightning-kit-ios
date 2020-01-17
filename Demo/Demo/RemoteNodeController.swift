@@ -115,7 +115,21 @@ class RemoveNodeController: UIViewController {
 
         let credentials = RpcCredentials(host: host, port: port, certificate: certificate, macaroon: macaroon)
 
-        GuestKit.testRemoteNode(credentials: credentials)
+        let kit = Kit(credentials: credentials)
+        if kit.state == .syncing || kit.state == .running {
+            App.shared.secureStorage.rpcCredentials = credentials
+            App.shared.kit = kit
+
+            if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+                UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                    window.rootViewController = UINavigationController(rootViewController: MainController())
+                })
+            }
+        } else {
+            let alert = UIAlertController(title: "Wrong credentials", message: "State: \(kit.state)", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default))
+            self.present(alert, animated: true, completion: nil)
+        }
     }
 
     private func configure(textField: UITextField) {

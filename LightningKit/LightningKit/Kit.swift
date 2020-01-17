@@ -3,15 +3,28 @@ import NIO
 import NIOSSL
 import NIOHPACK
 
-public class GuestKit {
+public class Kit {
+    deinit {
+        try? group?.syncShutdownGracefully()
+    }
+    
+    public enum WalletState {
+        case connecting
+        case locked
+        case syncing
+        case running
+        case error
+    }
 
-    public static func testRemoteNode(credentials: RpcCredentials) {
+    public var state: WalletState
+    var group: EventLoopGroup?
+    var connection: ClientConnection?
+
+    public init(credentials: RpcCredentials) {
         print("Testing Connection: \(credentials)")
+        state = .connecting
 
         let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        defer {
-            try? group.syncShutdownGracefully()
-        }
 
         let certificateBytes: [UInt8] = Array(credentials.certificate.utf8)
         let certificate = try! NIOSSLCertificate(bytes: certificateBytes, format: .pem)
@@ -33,16 +46,29 @@ public class GuestKit {
         let connection = ClientConnection(configuration: config)
         let client = Lnrpc_LightningServiceClient(connection: connection, defaultCallOptions: callOptions)
 
-        let request = Lnrpc_ChannelBalanceRequest()
-        let call = client.channelBalance(request)
-        
+        let request = Lnrpc_GetInfoRequest()
+        let call = client.getInfo(request)
+
         do {
             let response = try call.response.wait()
-
-            print("Response: balance: \(response.balance)")
+            
+            state = response.syncedToChain ? .running : .syncing
+            print("Response: node alias: \(response.alias); state: \(state)")
+        } catch let error as GRPCStatus {
+            if error.code == .unimplemented {
+                state = .locked
+                print("Wallet locked")
+            } else {
+                state = .error
+                print("ERROR: \(error): \(error.localizedDescription)")
+            }
         } catch {
+            state = .error
             print("ERROR: \(error): \(error.localizedDescription)")
         }
+
+        self.group = group
+        self.connection = connection
     }
 
 }

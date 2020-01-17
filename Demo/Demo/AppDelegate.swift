@@ -1,4 +1,5 @@
 import UIKit
+import LightningKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -10,7 +11,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         window?.overrideUserInterfaceStyle = .light
         window?.backgroundColor = .white
-        window?.rootViewController = UINavigationController(rootViewController: GuestController())
+        
+        if let credentials = App.shared.secureStorage.rpcCredentials {
+            App.shared.kit = Kit(credentials: credentials)
+            window?.rootViewController = UINavigationController(rootViewController: MainController())
+        } else {
+            window?.rootViewController = UINavigationController(rootViewController: GuestController())
+        }
 
         return true
     }

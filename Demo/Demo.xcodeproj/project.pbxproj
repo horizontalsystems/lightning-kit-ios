@@ -20,6 +20,9 @@
 		D011637D23CC9A8600578F38 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011637A23CC9A8600578F38 /* AppDelegate.swift */; };
 		D011637E23CC9A8600578F38 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = D011637B23CC9A8600578F38 /* LaunchScreen.xib */; };
 		D011637F23CC9A8600578F38 /* MainController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011637C23CC9A8600578F38 /* MainController.swift */; };
+		D0DFDA2C23D1C45B00CCB65F /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3A8070C23D05A7400BD50FB /* SnapKit */; };
+		D0DFDA2E23D1C48800CCB65F /* InfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DFDA2D23D1C48800CCB65F /* InfoController.swift */; };
+		D0DFDA3023D1C4D200CCB65F /* ChannelsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DFDA2F23D1C4D200CCB65F /* ChannelsController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -51,6 +54,8 @@
 		D011637A23CC9A8600578F38 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D011637B23CC9A8600578F38 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		D011637C23CC9A8600578F38 /* MainController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainController.swift; sourceTree = "<group>"; };
+		D0DFDA2D23D1C48800CCB65F /* InfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoController.swift; sourceTree = "<group>"; };
+		D0DFDA2F23D1C4D200CCB65F /* ChannelsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelsController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +64,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D011637423CC97F900578F38 /* LightningKit.framework in Frameworks */,
+				D0DFDA2C23D1C45B00CCB65F /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,6 +94,8 @@
 				D011637A23CC9A8600578F38 /* AppDelegate.swift */,
 				D011637B23CC9A8600578F38 /* LaunchScreen.xib */,
 				D011637C23CC9A8600578F38 /* MainController.swift */,
+				D0DFDA2D23D1C48800CCB65F /* InfoController.swift */,
+				D0DFDA2F23D1C4D200CCB65F /* ChannelsController.swift */,
 				D011635223CC972400578F38 /* Assets.xcassets */,
 				D011635723CC972400578F38 /* Info.plist */,
 				11B35AE3639078671881281D /* GuestController.swift */,
@@ -127,7 +135,7 @@
 			);
 			name = Demo;
 			packageProductDependencies = (
-				D3A8070C23D05A7400BD50FB /* XCSwiftPackageProductDependency */,
+				D3A8070C23D05A7400BD50FB /* SnapKit */,
 			);
 			productName = Demo;
 			productReference = D011634623CC972200578F38 /* Demo.app */;
@@ -159,7 +167,7 @@
 			);
 			mainGroup = D011633D23CC972200578F38;
 			packageReferences = (
-				D3A8070B23D05A7400BD50FB /* XCRemoteSwiftPackageReference */,
+				D3A8070B23D05A7400BD50FB /* XCRemoteSwiftPackageReference "SnapKit" */,
 			);
 			productRefGroup = D011634723CC972200578F38 /* Products */;
 			projectDirPath = "";
@@ -196,6 +204,8 @@
 				11B35DF1AE34804376706BED /* ICodableStorage.swift in Sources */,
 				11B353D1368523BDA608AE78 /* SecureStorage.swift in Sources */,
 				11B3529F0AAB2663511E63FE /* App.swift in Sources */,
+				D0DFDA2E23D1C48800CCB65F /* InfoController.swift in Sources */,
+				D0DFDA3023D1C4D200CCB65F /* ChannelsController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +389,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D3A8070B23D05A7400BD50FB /* XCRemoteSwiftPackageReference */ = {
+		D3A8070B23D05A7400BD50FB /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
 			requirement = {
@@ -390,9 +400,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D3A8070C23D05A7400BD50FB /* XCSwiftPackageProductDependency */ = {
+		D3A8070C23D05A7400BD50FB /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D3A8070B23D05A7400BD50FB /* XCRemoteSwiftPackageReference */;
+			package = D3A8070B23D05A7400BD50FB /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
 		};
 /* End XCSwiftPackageProductDependency section */
