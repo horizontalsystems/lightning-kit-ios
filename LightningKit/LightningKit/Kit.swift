@@ -1,74 +1,33 @@
 import GRPC
-import NIO
-import NIOSSL
-import NIOHPACK
+import RxSwift
 
 public class Kit {
-    deinit {
-        try? group?.syncShutdownGracefully()
+    private let lndNode: ILndNode
+    
+    public var statusObservable: Observable<NodeStatus> {
+        lndNode.statusObservable
     }
     
-    public enum WalletState {
-        case connecting
-        case locked
-        case syncing
-        case running
-        case error
+    fileprivate init(lndNode: ILndNode) {
+        self.lndNode = lndNode
     }
+}
 
-    public var state: WalletState
-    var group: EventLoopGroup?
-    var connection: ClientConnection?
-
-    public init(credentials: RpcCredentials) {
-        print("Testing Connection: \(credentials)")
-        state = .connecting
-
-        let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-
-        let certificateBytes: [UInt8] = Array(credentials.certificate.utf8)
-        let certificate = try! NIOSSLCertificate(bytes: certificateBytes, format: .pem)
-        let tlsConfig = ClientConnection.Configuration.TLS(
-            trustRoots: .certificates([certificate]),
-            hostnameOverride: "localhost"
-        )
-
-        let callOptions = CallOptions(
-            customMetadata: HPACKHeaders([("macaroon", credentials.macaroon)])
-        )
-
-        let config = ClientConnection.Configuration(
-          target: .hostAndPort(credentials.host, credentials.port),
-          eventLoopGroup: group,
-          tls: tlsConfig
-        )
-
-        let connection = ClientConnection(configuration: config)
-        let client = Lnrpc_LightningServiceClient(connection: connection, defaultCallOptions: callOptions)
-
-        let request = Lnrpc_GetInfoRequest()
-        let call = client.getInfo(request)
-
+public extension Kit {
+    static func validateRemoteConnection(rpcCredentials: RpcCredentials) -> Single<Void> {
         do {
-            let response = try call.response.wait()
+            let remoteLndNode = try RemoteLnd(rpcCredentials: rpcCredentials)
             
-            state = response.syncedToChain ? .running : .syncing
-            print("Response: node alias: \(response.alias); state: \(state)")
-        } catch let error as GRPCStatus {
-            if error.code == .unimplemented {
-                state = .locked
-                print("Wallet locked")
-            } else {
-                state = .error
-                print("ERROR: \(error): \(error.localizedDescription)")
-            }
+            return remoteLndNode.validateAsync()
         } catch {
-            state = .error
-            print("ERROR: \(error): \(error.localizedDescription)")
+            return Single.error(error)
         }
-
-        self.group = group
-        self.connection = connection
     }
 
+    static func remote(rpcCredentials: RpcCredentials) throws -> Kit {
+        let remoteLndNode = try RemoteLnd(rpcCredentials: rpcCredentials)
+        remoteLndNode.scheduleStatusUpdates()
+        
+        return Kit(lndNode: remoteLndNode)
+    }
 }

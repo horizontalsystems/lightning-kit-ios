@@ -1,11 +1,19 @@
 import UIKit
 import LightningKit
+import Logging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        LoggingSystem.bootstrap {
+          var handler = StreamLogHandler.standardOutput(label: $0)
+            handler.logLevel = .trace
+          return handler
+        }
+    
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
 
@@ -13,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .white
         
         if let credentials = App.shared.secureStorage.rpcCredentials {
-            App.shared.kit = Kit(credentials: credentials)
+            App.shared.kit = try? Kit.remote(rpcCredentials: credentials)
             window?.rootViewController = UINavigationController(rootViewController: MainController())
         } else {
             window?.rootViewController = UINavigationController(rootViewController: GuestController())

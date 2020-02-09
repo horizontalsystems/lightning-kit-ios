@@ -1,13 +1,16 @@
 import UIKit
 import LightningKit
 import SnapKit
+import RxSwift
 
-class RemoveNodeController: UIViewController {
+class RemoteNodeController: UIViewController {
     private let hostTextField = UITextField()
     private let portTextField = UITextField()
     private let certificateTextView = UITextView()
     private let macaroonTextView = UITextView()
     private let connectButton = UIButton()
+    
+    private let disposeBag = DisposeBag()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,22 +117,30 @@ class RemoveNodeController: UIViewController {
         guard let macaroon = macaroonTextView.text, !macaroon.isEmpty else { return }
 
         let credentials = RpcCredentials(host: host, port: port, certificate: certificate, macaroon: macaroon)
-
-        let kit = Kit(credentials: credentials)
-        if kit.state == .syncing || kit.state == .running {
-            App.shared.secureStorage.rpcCredentials = credentials
-            App.shared.kit = kit
-
-            if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
-                UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
-                    window.rootViewController = UINavigationController(rootViewController: MainController())
-                })
-            }
-        } else {
-            let alert = UIAlertController(title: "Wrong credentials", message: "State: \(kit.state)", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .default))
-            self.present(alert, animated: true, completion: nil)
-        }
+        
+        Kit.validateRemoteConnection(rpcCredentials: credentials)
+            .subscribe(
+                onSuccess: {
+                    App.shared.secureStorage.rpcCredentials = credentials
+                    App.shared.kit = try? Kit.remote(rpcCredentials: credentials)
+                    
+                    DispatchQueue.main.async {
+                        if let window = UIApplication.shared.windows.first(where: { $0.isKeyWindow }) {
+                            UIView.transition(with: window, duration: 0.5, options: .transitionCrossDissolve, animations: {
+                                window.rootViewController = UINavigationController(rootViewController: MainController())
+                            })
+                        }
+                    }
+                },
+                onError: { [weak self] error in
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Wrong credentials", message: "Error: \(error)", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self?.present(alert, animated: true, completion: nil)
+                    }
+                }
+            )
+            .disposed(by: disposeBag)
     }
 
     private func configure(textField: UITextField) {

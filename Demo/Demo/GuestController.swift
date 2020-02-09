@@ -39,7 +39,7 @@ class GuestController: UIViewController {
     }
 
     @objc func onTapRemote() {
-        let controller = RemoveNodeController()
+        let controller = RemoteNodeController()
         navigationController?.pushViewController(controller, animated: true)
     }
 

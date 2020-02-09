@@ -846,3 +846,602 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
 
 }
 
+/// To build a server, implement a class that conforms to this protocol.
+internal protocol Lnrpc_WalletUnlockerProvider: CallHandlerProvider {
+  func genSeed(request: Lnrpc_GenSeedRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_GenSeedResponse>
+  func initWallet(request: Lnrpc_InitWalletRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_InitWalletResponse>
+  func unlockWallet(request: Lnrpc_UnlockWalletRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_UnlockWalletResponse>
+  func changePassword(request: Lnrpc_ChangePasswordRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ChangePasswordResponse>
+}
+
+extension Lnrpc_WalletUnlockerProvider {
+  internal var serviceName: String { return "lnrpc.WalletUnlocker" }
+
+  /// Determines, calls and returns the appropriate request handler, depending on the request's method.
+  /// Returns nil for methods not handled by this service.
+  internal func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+    switch methodName {
+    case "GenSeed":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.genSeed(request: request, context: context)
+        }
+      }
+
+    case "InitWallet":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.initWallet(request: request, context: context)
+        }
+      }
+
+    case "UnlockWallet":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.unlockWallet(request: request, context: context)
+        }
+      }
+
+    case "ChangePassword":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.changePassword(request: request, context: context)
+        }
+      }
+
+    default: return nil
+    }
+  }
+}
+
+/// To build a server, implement a class that conforms to this protocol.
+internal protocol Lnrpc_LightningProvider: CallHandlerProvider {
+  func walletBalance(request: Lnrpc_WalletBalanceRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_WalletBalanceResponse>
+  func channelBalance(request: Lnrpc_ChannelBalanceRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ChannelBalanceResponse>
+  func getTransactions(request: Lnrpc_GetTransactionsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_TransactionDetails>
+  func estimateFee(request: Lnrpc_EstimateFeeRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_EstimateFeeResponse>
+  func sendCoins(request: Lnrpc_SendCoinsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_SendCoinsResponse>
+  func listUnspent(request: Lnrpc_ListUnspentRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ListUnspentResponse>
+  func subscribeTransactions(request: Lnrpc_GetTransactionsRequest, context: StreamingResponseCallContext<Lnrpc_Transaction>) -> EventLoopFuture<GRPCStatus>
+  func sendMany(request: Lnrpc_SendManyRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_SendManyResponse>
+  func newAddress(request: Lnrpc_NewAddressRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_NewAddressResponse>
+  func signMessage(request: Lnrpc_SignMessageRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_SignMessageResponse>
+  func verifyMessage(request: Lnrpc_VerifyMessageRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_VerifyMessageResponse>
+  func connectPeer(request: Lnrpc_ConnectPeerRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ConnectPeerResponse>
+  func disconnectPeer(request: Lnrpc_DisconnectPeerRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_DisconnectPeerResponse>
+  func listPeers(request: Lnrpc_ListPeersRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ListPeersResponse>
+  func subscribePeerEvents(request: Lnrpc_PeerEventSubscription, context: StreamingResponseCallContext<Lnrpc_PeerEvent>) -> EventLoopFuture<GRPCStatus>
+  func getInfo(request: Lnrpc_GetInfoRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_GetInfoResponse>
+  func pendingChannels(request: Lnrpc_PendingChannelsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_PendingChannelsResponse>
+  func listChannels(request: Lnrpc_ListChannelsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ListChannelsResponse>
+  func subscribeChannelEvents(request: Lnrpc_ChannelEventSubscription, context: StreamingResponseCallContext<Lnrpc_ChannelEventUpdate>) -> EventLoopFuture<GRPCStatus>
+  func closedChannels(request: Lnrpc_ClosedChannelsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ClosedChannelsResponse>
+  func openChannelSync(request: Lnrpc_OpenChannelRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ChannelPoint>
+  func openChannel(request: Lnrpc_OpenChannelRequest, context: StreamingResponseCallContext<Lnrpc_OpenStatusUpdate>) -> EventLoopFuture<GRPCStatus>
+  func fundingStateStep(request: Lnrpc_FundingTransitionMsg, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_FundingStateStepResp>
+  func channelAcceptor(context: StreamingResponseCallContext<Lnrpc_ChannelAcceptRequest>) -> EventLoopFuture<(StreamEvent<Lnrpc_ChannelAcceptResponse>) -> Void>
+  func closeChannel(request: Lnrpc_CloseChannelRequest, context: StreamingResponseCallContext<Lnrpc_CloseStatusUpdate>) -> EventLoopFuture<GRPCStatus>
+  func abandonChannel(request: Lnrpc_AbandonChannelRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_AbandonChannelResponse>
+  func sendPayment(context: StreamingResponseCallContext<Lnrpc_SendResponse>) -> EventLoopFuture<(StreamEvent<Lnrpc_SendRequest>) -> Void>
+  func sendPaymentSync(request: Lnrpc_SendRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_SendResponse>
+  func sendToRoute(context: StreamingResponseCallContext<Lnrpc_SendResponse>) -> EventLoopFuture<(StreamEvent<Lnrpc_SendToRouteRequest>) -> Void>
+  func sendToRouteSync(request: Lnrpc_SendToRouteRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_SendResponse>
+  func addInvoice(request: Lnrpc_Invoice, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_AddInvoiceResponse>
+  func listInvoices(request: Lnrpc_ListInvoiceRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ListInvoiceResponse>
+  func lookupInvoice(request: Lnrpc_PaymentHash, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_Invoice>
+  func subscribeInvoices(request: Lnrpc_InvoiceSubscription, context: StreamingResponseCallContext<Lnrpc_Invoice>) -> EventLoopFuture<GRPCStatus>
+  func decodePayReq(request: Lnrpc_PayReqString, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_PayReq>
+  func listPayments(request: Lnrpc_ListPaymentsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ListPaymentsResponse>
+  func deleteAllPayments(request: Lnrpc_DeleteAllPaymentsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_DeleteAllPaymentsResponse>
+  func describeGraph(request: Lnrpc_ChannelGraphRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ChannelGraph>
+  func getChanInfo(request: Lnrpc_ChanInfoRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ChannelEdge>
+  func getNodeInfo(request: Lnrpc_NodeInfoRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_NodeInfo>
+  func queryRoutes(request: Lnrpc_QueryRoutesRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_QueryRoutesResponse>
+  func getNetworkInfo(request: Lnrpc_NetworkInfoRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_NetworkInfo>
+  func stopDaemon(request: Lnrpc_StopRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_StopResponse>
+  func subscribeChannelGraph(request: Lnrpc_GraphTopologySubscription, context: StreamingResponseCallContext<Lnrpc_GraphTopologyUpdate>) -> EventLoopFuture<GRPCStatus>
+  func debugLevel(request: Lnrpc_DebugLevelRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_DebugLevelResponse>
+  func feeReport(request: Lnrpc_FeeReportRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_FeeReportResponse>
+  func updateChannelPolicy(request: Lnrpc_PolicyUpdateRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_PolicyUpdateResponse>
+  func forwardingHistory(request: Lnrpc_ForwardingHistoryRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ForwardingHistoryResponse>
+  func exportChannelBackup(request: Lnrpc_ExportChannelBackupRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ChannelBackup>
+  func exportAllChannelBackups(request: Lnrpc_ChanBackupExportRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ChanBackupSnapshot>
+  func verifyChanBackup(request: Lnrpc_ChanBackupSnapshot, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_VerifyChanBackupResponse>
+  func restoreChannelBackups(request: Lnrpc_RestoreChanBackupRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_RestoreBackupResponse>
+  func subscribeChannelBackups(request: Lnrpc_ChannelBackupSubscription, context: StreamingResponseCallContext<Lnrpc_ChanBackupSnapshot>) -> EventLoopFuture<GRPCStatus>
+  func bakeMacaroon(request: Lnrpc_BakeMacaroonRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_BakeMacaroonResponse>
+}
+
+extension Lnrpc_LightningProvider {
+  internal var serviceName: String { return "lnrpc.Lightning" }
+
+  /// Determines, calls and returns the appropriate request handler, depending on the request's method.
+  /// Returns nil for methods not handled by this service.
+  internal func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+    switch methodName {
+    case "WalletBalance":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.walletBalance(request: request, context: context)
+        }
+      }
+
+    case "ChannelBalance":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.channelBalance(request: request, context: context)
+        }
+      }
+
+    case "GetTransactions":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.getTransactions(request: request, context: context)
+        }
+      }
+
+    case "EstimateFee":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.estimateFee(request: request, context: context)
+        }
+      }
+
+    case "SendCoins":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.sendCoins(request: request, context: context)
+        }
+      }
+
+    case "ListUnspent":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.listUnspent(request: request, context: context)
+        }
+      }
+
+    case "SubscribeTransactions":
+      return ServerStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.subscribeTransactions(request: request, context: context)
+        }
+      }
+
+    case "SendMany":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.sendMany(request: request, context: context)
+        }
+      }
+
+    case "NewAddress":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.newAddress(request: request, context: context)
+        }
+      }
+
+    case "SignMessage":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.signMessage(request: request, context: context)
+        }
+      }
+
+    case "VerifyMessage":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.verifyMessage(request: request, context: context)
+        }
+      }
+
+    case "ConnectPeer":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.connectPeer(request: request, context: context)
+        }
+      }
+
+    case "DisconnectPeer":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.disconnectPeer(request: request, context: context)
+        }
+      }
+
+    case "ListPeers":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.listPeers(request: request, context: context)
+        }
+      }
+
+    case "SubscribePeerEvents":
+      return ServerStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.subscribePeerEvents(request: request, context: context)
+        }
+      }
+
+    case "GetInfo":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.getInfo(request: request, context: context)
+        }
+      }
+
+    case "PendingChannels":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.pendingChannels(request: request, context: context)
+        }
+      }
+
+    case "ListChannels":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.listChannels(request: request, context: context)
+        }
+      }
+
+    case "SubscribeChannelEvents":
+      return ServerStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.subscribeChannelEvents(request: request, context: context)
+        }
+      }
+
+    case "ClosedChannels":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.closedChannels(request: request, context: context)
+        }
+      }
+
+    case "OpenChannelSync":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.openChannelSync(request: request, context: context)
+        }
+      }
+
+    case "OpenChannel":
+      return ServerStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.openChannel(request: request, context: context)
+        }
+      }
+
+    case "FundingStateStep":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.fundingStateStep(request: request, context: context)
+        }
+      }
+
+    case "ChannelAcceptor":
+      return BidirectionalStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return self.channelAcceptor(context: context)
+      }
+
+    case "CloseChannel":
+      return ServerStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.closeChannel(request: request, context: context)
+        }
+      }
+
+    case "AbandonChannel":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.abandonChannel(request: request, context: context)
+        }
+      }
+
+    case "SendPayment":
+      return BidirectionalStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return self.sendPayment(context: context)
+      }
+
+    case "SendPaymentSync":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.sendPaymentSync(request: request, context: context)
+        }
+      }
+
+    case "SendToRoute":
+      return BidirectionalStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return self.sendToRoute(context: context)
+      }
+
+    case "SendToRouteSync":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.sendToRouteSync(request: request, context: context)
+        }
+      }
+
+    case "AddInvoice":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.addInvoice(request: request, context: context)
+        }
+      }
+
+    case "ListInvoices":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.listInvoices(request: request, context: context)
+        }
+      }
+
+    case "LookupInvoice":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.lookupInvoice(request: request, context: context)
+        }
+      }
+
+    case "SubscribeInvoices":
+      return ServerStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.subscribeInvoices(request: request, context: context)
+        }
+      }
+
+    case "DecodePayReq":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.decodePayReq(request: request, context: context)
+        }
+      }
+
+    case "ListPayments":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.listPayments(request: request, context: context)
+        }
+      }
+
+    case "DeleteAllPayments":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.deleteAllPayments(request: request, context: context)
+        }
+      }
+
+    case "DescribeGraph":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.describeGraph(request: request, context: context)
+        }
+      }
+
+    case "GetChanInfo":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.getChanInfo(request: request, context: context)
+        }
+      }
+
+    case "GetNodeInfo":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.getNodeInfo(request: request, context: context)
+        }
+      }
+
+    case "QueryRoutes":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.queryRoutes(request: request, context: context)
+        }
+      }
+
+    case "GetNetworkInfo":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.getNetworkInfo(request: request, context: context)
+        }
+      }
+
+    case "StopDaemon":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.stopDaemon(request: request, context: context)
+        }
+      }
+
+    case "SubscribeChannelGraph":
+      return ServerStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.subscribeChannelGraph(request: request, context: context)
+        }
+      }
+
+    case "DebugLevel":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.debugLevel(request: request, context: context)
+        }
+      }
+
+    case "FeeReport":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.feeReport(request: request, context: context)
+        }
+      }
+
+    case "UpdateChannelPolicy":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.updateChannelPolicy(request: request, context: context)
+        }
+      }
+
+    case "ForwardingHistory":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.forwardingHistory(request: request, context: context)
+        }
+      }
+
+    case "ExportChannelBackup":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.exportChannelBackup(request: request, context: context)
+        }
+      }
+
+    case "ExportAllChannelBackups":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.exportAllChannelBackups(request: request, context: context)
+        }
+      }
+
+    case "VerifyChanBackup":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.verifyChanBackup(request: request, context: context)
+        }
+      }
+
+    case "RestoreChannelBackups":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.restoreChannelBackups(request: request, context: context)
+        }
+      }
+
+    case "SubscribeChannelBackups":
+      return ServerStreamingCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.subscribeChannelBackups(request: request, context: context)
+        }
+      }
+
+    case "BakeMacaroon":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.bakeMacaroon(request: request, context: context)
+        }
+      }
+
+    default: return nil
+    }
+  }
+}
+
+
+/// Provides conformance to `GRPCPayload` for the request and response messages
+extension Lnrpc_GenSeedRequest: GRPCProtobufPayload {}
+extension Lnrpc_GenSeedResponse: GRPCProtobufPayload {}
+extension Lnrpc_InitWalletRequest: GRPCProtobufPayload {}
+extension Lnrpc_InitWalletResponse: GRPCProtobufPayload {}
+extension Lnrpc_UnlockWalletRequest: GRPCProtobufPayload {}
+extension Lnrpc_UnlockWalletResponse: GRPCProtobufPayload {}
+extension Lnrpc_ChangePasswordRequest: GRPCProtobufPayload {}
+extension Lnrpc_ChangePasswordResponse: GRPCProtobufPayload {}
+
+extension Lnrpc_WalletBalanceRequest: GRPCProtobufPayload {}
+extension Lnrpc_WalletBalanceResponse: GRPCProtobufPayload {}
+extension Lnrpc_ChannelBalanceRequest: GRPCProtobufPayload {}
+extension Lnrpc_ChannelBalanceResponse: GRPCProtobufPayload {}
+extension Lnrpc_GetTransactionsRequest: GRPCProtobufPayload {}
+extension Lnrpc_TransactionDetails: GRPCProtobufPayload {}
+extension Lnrpc_EstimateFeeRequest: GRPCProtobufPayload {}
+extension Lnrpc_EstimateFeeResponse: GRPCProtobufPayload {}
+extension Lnrpc_SendCoinsRequest: GRPCProtobufPayload {}
+extension Lnrpc_SendCoinsResponse: GRPCProtobufPayload {}
+extension Lnrpc_ListUnspentRequest: GRPCProtobufPayload {}
+extension Lnrpc_ListUnspentResponse: GRPCProtobufPayload {}
+extension Lnrpc_Transaction: GRPCProtobufPayload {}
+extension Lnrpc_SendManyRequest: GRPCProtobufPayload {}
+extension Lnrpc_SendManyResponse: GRPCProtobufPayload {}
+extension Lnrpc_NewAddressRequest: GRPCProtobufPayload {}
+extension Lnrpc_NewAddressResponse: GRPCProtobufPayload {}
+extension Lnrpc_SignMessageRequest: GRPCProtobufPayload {}
+extension Lnrpc_SignMessageResponse: GRPCProtobufPayload {}
+extension Lnrpc_VerifyMessageRequest: GRPCProtobufPayload {}
+extension Lnrpc_VerifyMessageResponse: GRPCProtobufPayload {}
+extension Lnrpc_ConnectPeerRequest: GRPCProtobufPayload {}
+extension Lnrpc_ConnectPeerResponse: GRPCProtobufPayload {}
+extension Lnrpc_DisconnectPeerRequest: GRPCProtobufPayload {}
+extension Lnrpc_DisconnectPeerResponse: GRPCProtobufPayload {}
+extension Lnrpc_ListPeersRequest: GRPCProtobufPayload {}
+extension Lnrpc_ListPeersResponse: GRPCProtobufPayload {}
+extension Lnrpc_PeerEventSubscription: GRPCProtobufPayload {}
+extension Lnrpc_PeerEvent: GRPCProtobufPayload {}
+extension Lnrpc_GetInfoRequest: GRPCProtobufPayload {}
+extension Lnrpc_GetInfoResponse: GRPCProtobufPayload {}
+extension Lnrpc_PendingChannelsRequest: GRPCProtobufPayload {}
+extension Lnrpc_PendingChannelsResponse: GRPCProtobufPayload {}
+extension Lnrpc_ListChannelsRequest: GRPCProtobufPayload {}
+extension Lnrpc_ListChannelsResponse: GRPCProtobufPayload {}
+extension Lnrpc_ChannelEventSubscription: GRPCProtobufPayload {}
+extension Lnrpc_ChannelEventUpdate: GRPCProtobufPayload {}
+extension Lnrpc_ClosedChannelsRequest: GRPCProtobufPayload {}
+extension Lnrpc_ClosedChannelsResponse: GRPCProtobufPayload {}
+extension Lnrpc_OpenChannelRequest: GRPCProtobufPayload {}
+extension Lnrpc_ChannelPoint: GRPCProtobufPayload {}
+extension Lnrpc_OpenStatusUpdate: GRPCProtobufPayload {}
+extension Lnrpc_FundingTransitionMsg: GRPCProtobufPayload {}
+extension Lnrpc_FundingStateStepResp: GRPCProtobufPayload {}
+extension Lnrpc_ChannelAcceptResponse: GRPCProtobufPayload {}
+extension Lnrpc_ChannelAcceptRequest: GRPCProtobufPayload {}
+extension Lnrpc_CloseChannelRequest: GRPCProtobufPayload {}
+extension Lnrpc_CloseStatusUpdate: GRPCProtobufPayload {}
+extension Lnrpc_AbandonChannelRequest: GRPCProtobufPayload {}
+extension Lnrpc_AbandonChannelResponse: GRPCProtobufPayload {}
+extension Lnrpc_SendRequest: GRPCProtobufPayload {}
+extension Lnrpc_SendResponse: GRPCProtobufPayload {}
+extension Lnrpc_SendToRouteRequest: GRPCProtobufPayload {}
+extension Lnrpc_Invoice: GRPCProtobufPayload {}
+extension Lnrpc_AddInvoiceResponse: GRPCProtobufPayload {}
+extension Lnrpc_ListInvoiceRequest: GRPCProtobufPayload {}
+extension Lnrpc_ListInvoiceResponse: GRPCProtobufPayload {}
+extension Lnrpc_PaymentHash: GRPCProtobufPayload {}
+extension Lnrpc_InvoiceSubscription: GRPCProtobufPayload {}
+extension Lnrpc_PayReqString: GRPCProtobufPayload {}
+extension Lnrpc_PayReq: GRPCProtobufPayload {}
+extension Lnrpc_ListPaymentsRequest: GRPCProtobufPayload {}
+extension Lnrpc_ListPaymentsResponse: GRPCProtobufPayload {}
+extension Lnrpc_DeleteAllPaymentsRequest: GRPCProtobufPayload {}
+extension Lnrpc_DeleteAllPaymentsResponse: GRPCProtobufPayload {}
+extension Lnrpc_ChannelGraphRequest: GRPCProtobufPayload {}
+extension Lnrpc_ChannelGraph: GRPCProtobufPayload {}
+extension Lnrpc_ChanInfoRequest: GRPCProtobufPayload {}
+extension Lnrpc_ChannelEdge: GRPCProtobufPayload {}
+extension Lnrpc_NodeInfoRequest: GRPCProtobufPayload {}
+extension Lnrpc_NodeInfo: GRPCProtobufPayload {}
+extension Lnrpc_QueryRoutesRequest: GRPCProtobufPayload {}
+extension Lnrpc_QueryRoutesResponse: GRPCProtobufPayload {}
+extension Lnrpc_NetworkInfoRequest: GRPCProtobufPayload {}
+extension Lnrpc_NetworkInfo: GRPCProtobufPayload {}
+extension Lnrpc_StopRequest: GRPCProtobufPayload {}
+extension Lnrpc_StopResponse: GRPCProtobufPayload {}
+extension Lnrpc_GraphTopologySubscription: GRPCProtobufPayload {}
+extension Lnrpc_GraphTopologyUpdate: GRPCProtobufPayload {}
+extension Lnrpc_DebugLevelRequest: GRPCProtobufPayload {}
+extension Lnrpc_DebugLevelResponse: GRPCProtobufPayload {}
+extension Lnrpc_FeeReportRequest: GRPCProtobufPayload {}
+extension Lnrpc_FeeReportResponse: GRPCProtobufPayload {}
+extension Lnrpc_PolicyUpdateRequest: GRPCProtobufPayload {}
+extension Lnrpc_PolicyUpdateResponse: GRPCProtobufPayload {}
+extension Lnrpc_ForwardingHistoryRequest: GRPCProtobufPayload {}
+extension Lnrpc_ForwardingHistoryResponse: GRPCProtobufPayload {}
+extension Lnrpc_ExportChannelBackupRequest: GRPCProtobufPayload {}
+extension Lnrpc_ChannelBackup: GRPCProtobufPayload {}
+extension Lnrpc_ChanBackupExportRequest: GRPCProtobufPayload {}
+extension Lnrpc_ChanBackupSnapshot: GRPCProtobufPayload {}
+extension Lnrpc_VerifyChanBackupResponse: GRPCProtobufPayload {}
+extension Lnrpc_RestoreChanBackupRequest: GRPCProtobufPayload {}
+extension Lnrpc_RestoreBackupResponse: GRPCProtobufPayload {}
+extension Lnrpc_ChannelBackupSubscription: GRPCProtobufPayload {}
+extension Lnrpc_BakeMacaroonRequest: GRPCProtobufPayload {}
+extension Lnrpc_BakeMacaroonResponse: GRPCProtobufPayload {}
+

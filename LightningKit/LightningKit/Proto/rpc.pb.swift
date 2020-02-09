@@ -738,7 +738,7 @@ struct Lnrpc_SendRequest {
 
   ///*
   ///Features assumed to be supported by the final node. All transitive feature
-  ///depdencies must also be set properly. For a given feature bit pair, either
+  ///dependencies must also be set properly. For a given feature bit pair, either
   ///optional or remote may be set, but not both. If this field is nil or empty,
   ///the router will try to load destination features from the graph as a
   ///fallback.
@@ -2841,6 +2841,14 @@ struct Lnrpc_ChannelEventUpdate {
     set {_uniqueStorage()._channel = .inactiveChannel(newValue)}
   }
 
+  var pendingOpenChannel: Lnrpc_PendingUpdate {
+    get {
+      if case .pendingOpenChannel(let v)? = _storage._channel {return v}
+      return Lnrpc_PendingUpdate()
+    }
+    set {_uniqueStorage()._channel = .pendingOpenChannel(newValue)}
+  }
+
   var type: Lnrpc_ChannelEventUpdate.UpdateType {
     get {return _storage._type}
     set {_uniqueStorage()._type = newValue}
@@ -2853,6 +2861,7 @@ struct Lnrpc_ChannelEventUpdate {
     case closedChannel(Lnrpc_ChannelCloseSummary)
     case activeChannel(Lnrpc_ChannelPoint)
     case inactiveChannel(Lnrpc_ChannelPoint)
+    case pendingOpenChannel(Lnrpc_PendingUpdate)
 
   #if !swift(>=4.1)
     static func ==(lhs: Lnrpc_ChannelEventUpdate.OneOf_Channel, rhs: Lnrpc_ChannelEventUpdate.OneOf_Channel) -> Bool {
@@ -2861,6 +2870,7 @@ struct Lnrpc_ChannelEventUpdate {
       case (.closedChannel(let l), .closedChannel(let r)): return l == r
       case (.activeChannel(let l), .activeChannel(let r)): return l == r
       case (.inactiveChannel(let l), .inactiveChannel(let r)): return l == r
+      case (.pendingOpenChannel(let l), .pendingOpenChannel(let r)): return l == r
       default: return false
       }
     }
@@ -2873,6 +2883,7 @@ struct Lnrpc_ChannelEventUpdate {
     case closedChannel // = 1
     case activeChannel // = 2
     case inactiveChannel // = 3
+    case pendingOpenChannel // = 4
     case UNRECOGNIZED(Int)
 
     init() {
@@ -2885,6 +2896,7 @@ struct Lnrpc_ChannelEventUpdate {
       case 1: self = .closedChannel
       case 2: self = .activeChannel
       case 3: self = .inactiveChannel
+      case 4: self = .pendingOpenChannel
       default: self = .UNRECOGNIZED(rawValue)
       }
     }
@@ -2895,6 +2907,7 @@ struct Lnrpc_ChannelEventUpdate {
       case .closedChannel: return 1
       case .activeChannel: return 2
       case .inactiveChannel: return 3
+      case .pendingOpenChannel: return 4
       case .UNRECOGNIZED(let i): return i
       }
     }
@@ -2915,6 +2928,7 @@ extension Lnrpc_ChannelEventUpdate.UpdateType: CaseIterable {
     .closedChannel,
     .activeChannel,
     .inactiveChannel,
+    .pendingOpenChannel,
   ]
 }
 
@@ -3112,7 +3126,7 @@ struct Lnrpc_QueryRoutesRequest {
 
   ///*
   ///Features assumed to be supported by the final node. All transitive feature
-  ///depdencies must also be set properly. For a given feature bit pair, either
+  ///dependencies must also be set properly. For a given feature bit pair, either
   ///optional or remote may be set, but not both. If this field is nil or empty,
   ///the router will try to load destination features from the graph as a
   ///fallback.
@@ -4032,9 +4046,9 @@ struct Lnrpc_Invoice {
   ///*
   ///Indicates if this invoice was a spontaneous payment that arrived via keysend
   ///[EXPERIMENTAL].
-  var isKeySend: Bool {
-    get {return _storage._isKeySend}
-    set {_uniqueStorage()._isKeySend = newValue}
+  var isKeysend: Bool {
+    get {return _storage._isKeysend}
+    set {_uniqueStorage()._isKeysend = newValue}
   }
 
   var unknownFields = SwiftProtobuf.UnknownStorage()
@@ -9512,6 +9526,7 @@ extension Lnrpc_ChannelEventUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messag
     2: .same(proto: "closed_channel"),
     3: .same(proto: "active_channel"),
     4: .same(proto: "inactive_channel"),
+    6: .same(proto: "pending_open_channel"),
     5: .same(proto: "type"),
   ]
 
@@ -9574,6 +9589,14 @@ extension Lnrpc_ChannelEventUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messag
           try decoder.decodeSingularMessageField(value: &v)
           if let v = v {_storage._channel = .inactiveChannel(v)}
         case 5: try decoder.decodeSingularEnumField(value: &_storage._type)
+        case 6:
+          var v: Lnrpc_PendingUpdate?
+          if let current = _storage._channel {
+            try decoder.handleConflictingOneOf()
+            if case .pendingOpenChannel(let m) = current {v = m}
+          }
+          try decoder.decodeSingularMessageField(value: &v)
+          if let v = v {_storage._channel = .pendingOpenChannel(v)}
         default: break
         }
       }
@@ -9592,9 +9615,13 @@ extension Lnrpc_ChannelEventUpdate: SwiftProtobuf.Message, SwiftProtobuf._Messag
       case .inactiveChannel(let v)?:
         try visitor.visitSingularMessageField(value: v, fieldNumber: 4)
       case nil: break
+      default: break
       }
       if _storage._type != .openChannel {
         try visitor.visitSingularEnumField(value: _storage._type, fieldNumber: 5)
+      }
+      if case .pendingOpenChannel(let v)? = _storage._channel {
+        try visitor.visitSingularMessageField(value: v, fieldNumber: 6)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -9622,6 +9649,7 @@ extension Lnrpc_ChannelEventUpdate.UpdateType: SwiftProtobuf._ProtoNameProviding
     1: .same(proto: "CLOSED_CHANNEL"),
     2: .same(proto: "ACTIVE_CHANNEL"),
     3: .same(proto: "INACTIVE_CHANNEL"),
+    4: .same(proto: "PENDING_OPEN_CHANNEL"),
   ]
 }
 
@@ -11302,7 +11330,7 @@ extension Lnrpc_Invoice: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     21: .same(proto: "state"),
     22: .same(proto: "htlcs"),
     24: .same(proto: "features"),
-    25: .same(proto: "is_key_send"),
+    25: .same(proto: "is_keysend"),
   ]
 
   fileprivate class _StorageClass {
@@ -11329,7 +11357,7 @@ extension Lnrpc_Invoice: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
     var _state: Lnrpc_Invoice.InvoiceState = .open
     var _htlcs: [Lnrpc_InvoiceHTLC] = []
     var _features: Dictionary<UInt32,Lnrpc_Feature> = [:]
-    var _isKeySend: Bool = false
+    var _isKeysend: Bool = false
 
     static let defaultInstance = _StorageClass()
 
@@ -11359,7 +11387,7 @@ extension Lnrpc_Invoice: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       _state = source._state
       _htlcs = source._htlcs
       _features = source._features
-      _isKeySend = source._isKeySend
+      _isKeysend = source._isKeysend
     }
   }
 
@@ -11398,7 +11426,7 @@ extension Lnrpc_Invoice: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
         case 22: try decoder.decodeRepeatedMessageField(value: &_storage._htlcs)
         case 23: try decoder.decodeSingularInt64Field(value: &_storage._valueMsat)
         case 24: try decoder.decodeMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt32,Lnrpc_Feature>.self, value: &_storage._features)
-        case 25: try decoder.decodeSingularBoolField(value: &_storage._isKeySend)
+        case 25: try decoder.decodeSingularBoolField(value: &_storage._isKeysend)
         default: break
         }
       }
@@ -11476,8 +11504,8 @@ extension Lnrpc_Invoice: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
       if !_storage._features.isEmpty {
         try visitor.visitMapField(fieldType: SwiftProtobuf._ProtobufMessageMap<SwiftProtobuf.ProtobufUInt32,Lnrpc_Feature>.self, value: _storage._features, fieldNumber: 24)
       }
-      if _storage._isKeySend != false {
-        try visitor.visitSingularBoolField(value: _storage._isKeySend, fieldNumber: 25)
+      if _storage._isKeysend != false {
+        try visitor.visitSingularBoolField(value: _storage._isKeysend, fieldNumber: 25)
       }
     }
     try unknownFields.traverse(visitor: &visitor)
@@ -11511,7 +11539,7 @@ extension Lnrpc_Invoice: SwiftProtobuf.Message, SwiftProtobuf._MessageImplementa
         if _storage._state != rhs_storage._state {return false}
         if _storage._htlcs != rhs_storage._htlcs {return false}
         if _storage._features != rhs_storage._features {return false}
-        if _storage._isKeySend != rhs_storage._isKeySend {return false}
+        if _storage._isKeysend != rhs_storage._isKeysend {return false}
         return true
       }
       if !storagesAreEqual {return false}
