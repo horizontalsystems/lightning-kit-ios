@@ -6,13 +6,6 @@ import Logging
 import RxSwift
 
 class LndNioConnection {
-    enum RequestType {
-        case unary
-        case serverStream
-        case clientStream
-        case biderectionalStream
-    }
-    
     private var available: Bool? = nil
 
     deinit {
@@ -50,13 +43,26 @@ class LndNioConnection {
         connectivityStateManager.listener = self
     }
     
-    func requestLightningService<T>(_ callType: RequestType, _ callFunction: (Lnrpc_LightningServiceClient) -> EventLoopFuture<T>) -> Single<T> {
-        
+    func unaryCall<T>(_ callFunction: (Lnrpc_LightningServiceClient) -> EventLoopFuture<T>) -> Single<T> {
         if let available = self.available, !available {
             return Single.error(GRPCStatus(code: .unavailable, message: "Not connected to remote node"))
         }
 
         return callFunction(lightningClient).toSingle()
+    }
+    
+    func serverStreamCall<T>(_ callFunction: @escaping (Lnrpc_LightningServiceClient, @escaping (T) -> Void) -> Void) -> Observable<T> {
+        if let available = self.available, !available {
+            return Observable.error(GRPCStatus(code: .unavailable, message: "Not connected to remote node"))
+        }
+
+        return Observable<T>.create { emitter in
+            callFunction(self.lightningClient) { response in
+                emitter.onNext(response)
+            }
+            
+            return Disposables.create()
+        }
     }
 }
 
