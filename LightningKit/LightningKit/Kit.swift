@@ -72,7 +72,7 @@ public class Kit {
         lndNode.listInvoices(pendingOnly: pending_only, offset: offset, limit: limit, reversed: reversed)
     }
 
-    public func unlockWallet(password: String) -> Single<Void> {
+    public func unlockWallet(password: Data) -> Single<Void> {
         lndNode.unlockWallet(password: password)
     }
 

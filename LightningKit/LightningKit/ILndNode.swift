@@ -16,7 +16,7 @@ protocol ILndNode {
 
     func payInvoice(invoice: String) -> Single<Lnrpc_SendResponse>
     func addInvoice(amount: Int64, memo: String) -> Single<Lnrpc_AddInvoiceResponse>
-    func unlockWallet(password: String) -> Single<Void>
+    func unlockWallet(password: Data) -> Single<Void>
     func decodePayReq(req: String) -> Single<Lnrpc_PayReq>
     func openChannel(nodePubKey: Data, amount: Int64) -> Observable<Lnrpc_OpenStatusUpdate>
     func closeChannel(channelPoint: String, forceClose: Bool) throws -> Observable<Lnrpc_CloseStatusUpdate>

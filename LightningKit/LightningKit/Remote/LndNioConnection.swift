@@ -14,6 +14,7 @@ class LndNioConnection {
 
     private let group: MultiThreadedEventLoopGroup
     let lightningClient: Lnrpc_LightningServiceClient
+    let walletUnlockClient: Lnrpc_WalletUnlockerServiceClient
     
     init(rpcCredentials: RpcCredentials) throws {
         group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
@@ -40,9 +41,19 @@ class LndNioConnection {
         let connection = ClientConnection(configuration: config)
 
         lightningClient = Lnrpc_LightningServiceClient(connection: connection, defaultCallOptions: callOptions)
+        walletUnlockClient = Lnrpc_WalletUnlockerServiceClient(connection: connection, defaultCallOptions: callOptions)
+        
         connectivityStateManager.listener = self
     }
     
+    func walletUnlockerUnaryCall<T>(_ callFunction: (Lnrpc_WalletUnlockerServiceClient) -> EventLoopFuture<T>) -> Single<T> {
+        if let available = self.available, !available {
+            return Single.error(GRPCStatus(code: .unavailable, message: "Not connected to remote node"))
+        }
+
+        return callFunction(walletUnlockClient).toSingle()
+    }
+
     func unaryCall<T>(_ callFunction: (Lnrpc_LightningServiceClient) -> EventLoopFuture<T>) -> Single<T> {
         if let available = self.available, !available {
             return Single.error(GRPCStatus(code: .unavailable, message: "Not connected to remote node"))

@@ -11,6 +11,7 @@ class RemoteLnd: ILndNode {
     }
 
     private let connection: LndNioConnection
+    private let walletUnlocker: WalletUnlocker
     private let disposeBag = DisposeBag()
     
     private let statusSubject = PublishSubject<NodeStatus>()
@@ -25,6 +26,7 @@ class RemoteLnd: ILndNode {
 
     init(rpcCredentials: RpcCredentials) throws {
         connection = try LndNioConnection(rpcCredentials: rpcCredentials)
+        walletUnlocker = WalletUnlocker(connection: connection)
     }
     
     func scheduleStatusUpdates() {
@@ -111,13 +113,12 @@ class RemoteLnd: ILndNode {
         }
     }
 
-    func unlockWallet(password: String) -> Single<Void> {
-        Single.just(Void())
-//        if (walletUnlocker.isUnlocking()) {
-//            return Single.error(WalletUnlocker.UnlockingException)
-//        }
-//
-//        return walletUnlocker.startUnlock(password)
+    func unlockWallet(password: Data) -> Single<Void> {
+        if walletUnlocker.isUnlocking() {
+            return Single.error(WalletUnlocker.UnlockingException())
+        }
+        
+        return walletUnlocker.startUnlock(password: password)
     }
 
     func listPayments() -> Single<Lnrpc_ListPaymentsResponse> {
@@ -221,13 +222,14 @@ class RemoteLnd: ILndNode {
     private func fetchStatus() -> Single<NodeStatus> {
         return getInfo()
             .map { $0.syncedToGraph ? .running : .syncing }
-            .catchError { error in
+            .catchError { [weak self] error in
                 var status: NodeStatus
 
                 if let grpcStatusError = error as? GRPCStatus {
                             if grpcStatusError.code == .unimplemented {
                                 status = .locked
-                            } else if grpcStatusError.code == .unavailable && self.status == .locked {
+                            } else if let walletUnlocker = self?.walletUnlocker,
+                                grpcStatusError.code == .unavailable && walletUnlocker.isUnlocking() {
                                 status = .unlocking
                             } else {
                                 status = .error(error: grpcStatusError)

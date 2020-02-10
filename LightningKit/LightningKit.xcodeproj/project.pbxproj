@@ -21,6 +21,7 @@
 		D0BF7DF823EFFF240048B3E8 /* ConnectivityStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF7DF723EFFF240048B3E8 /* ConnectivityStateManager.swift */; };
 		D0BF7DFA23F004160048B3E8 /* LndNioConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF7DF923F004160048B3E8 /* LndNioConnection.swift */; };
 		D0BF7DFC23F14BEB0048B3E8 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF7DFB23F14BEB0048B3E8 /* Data.swift */; };
+		D0BF7DFE23F17DD70048B3E8 /* WalletUnlocker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF7DFD23F17DD70048B3E8 /* WalletUnlocker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,6 +39,7 @@
 		D0BF7DF723EFFF240048B3E8 /* ConnectivityStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityStateManager.swift; sourceTree = "<group>"; };
 		D0BF7DF923F004160048B3E8 /* LndNioConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LndNioConnection.swift; sourceTree = "<group>"; };
 		D0BF7DFB23F14BEB0048B3E8 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		D0BF7DFD23F17DD70048B3E8 /* WalletUnlocker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletUnlocker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,6 +111,7 @@
 				2FA5D91F7FB09A61B64A18AC /* RemoteLnd.swift */,
 				D0BF7DF723EFFF240048B3E8 /* ConnectivityStateManager.swift */,
 				D0BF7DF923F004160048B3E8 /* LndNioConnection.swift */,
+				D0BF7DFD23F17DD70048B3E8 /* WalletUnlocker.swift */,
 			);
 			path = Remote;
 			sourceTree = "<group>";
@@ -208,6 +211,7 @@
 				D0BF7DFC23F14BEB0048B3E8 /* Data.swift in Sources */,
 				D0BF7DF823EFFF240048B3E8 /* ConnectivityStateManager.swift in Sources */,
 				11B357BB4BD04E517EF258F4 /* RpcCredentials.swift in Sources */,
+				D0BF7DFE23F17DD70048B3E8 /* WalletUnlocker.swift in Sources */,
 				D0BF7DF523ED78350048B3E8 /* rpc.pb.swift in Sources */,
 				2FA5D4F4E360A636EEB36747 /* RemoteLnd.swift in Sources */,
 				D0BF7DF423ED78350048B3E8 /* rpc.grpc.swift in Sources */,
