@@ -56,8 +56,13 @@ class LndNioConnection {
             return Observable.error(GRPCStatus(code: .unavailable, message: "Not connected to remote node"))
         }
 
-        return Observable<T>.create { emitter in
-            let call = callFunction(self.lightningClient) { response in
+        return Observable<T>.create { [weak self] emitter in
+            guard let connection = self else {
+                emitter.onCompleted()
+                return Disposables.create()
+            }
+            
+            let call = callFunction(connection.lightningClient) { response in
                 emitter.onNext(response)
             }
             

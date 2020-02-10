@@ -30,6 +30,14 @@ class InfoController: UIViewController {
                     self?.syncedToChainLabel.text = "Synced to Chain: \(status)"
                 })
                 .disposed(by: disposeBag!)
+            
+            kit.invoicesObservable
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .background))
+                .observeOn(MainScheduler.instance)
+                .subscribe(onNext: { invoice in
+                    print(invoice)
+                })
+                .disposed(by: disposeBag!)
         }
     }
 

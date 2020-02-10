@@ -10,6 +10,12 @@ public class Kit {
     public var paymentsObservable: Observable<Void> {
         paymentsUpdatedSubject.asObservable()
     }
+    public var invoicesObservable: Observable<Lnrpc_Invoice> {
+        retryWhenStatusIsSyncingOrRunning(lndNode.invoicesObservable())
+    }
+    public var channelsObservable: Observable<Lnrpc_ChannelEventUpdate> {
+        retryWhenStatusIsSyncingOrRunning(lndNode.channelsObservable())
+    }
 
     private let paymentsUpdatedSubject = PublishSubject<Void>()
     
@@ -94,17 +100,16 @@ public class Kit {
     public func closeChannel(channelPoint: String, forceClose: Bool) throws -> Observable<Lnrpc_CloseStatusUpdate> {
         try lndNode.closeChannel(channelPoint: channelPoint, forceClose: forceClose)
     }
-//
-//    public private func <T> Observable<T>.retryWhenStatusIsSyncingOrRunning() -> Observable<T> {
-//        return this.retryWhen {
-//            it.zipWith(
-//                statusObservable.filter { status ->
-//                    status == ILndNode.Status.SYNCING || status == ILndNode.Status.RUNNING
-//                },
-//                public BiFuncction<Throwable, ILndNode.Status, Unit> { t1, t2 -> Unit })
-//        }
-//    }
 
+    private func retryWhenStatusIsSyncingOrRunning<T>(_ observable: Observable<T>) -> Observable<T> {
+        observable.retryWhen { [weak self] errorObservable -> Observable<(Error, NodeStatus)> in
+            guard let kit = self else {
+                return .empty()
+            }
+            
+            return Observable.zip(errorObservable, kit.statusObservable.filter { $0 == .syncing || $0 == .running })
+        }
+    }
 }
 
 public extension Kit {
