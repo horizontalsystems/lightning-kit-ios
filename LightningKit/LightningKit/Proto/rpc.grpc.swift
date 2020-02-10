@@ -28,23 +28,23 @@ import SwiftProtobuf
 
 
 /// Usage: instantiate Lnrpc_WalletUnlockerServiceClient, then call methods of this protocol to make API calls.
-internal protocol Lnrpc_WalletUnlockerService {
+public protocol Lnrpc_WalletUnlockerService {
   func genSeed(_ request: Lnrpc_GenSeedRequest, callOptions: CallOptions?) -> UnaryCall<Lnrpc_GenSeedRequest, Lnrpc_GenSeedResponse>
   func initWallet(_ request: Lnrpc_InitWalletRequest, callOptions: CallOptions?) -> UnaryCall<Lnrpc_InitWalletRequest, Lnrpc_InitWalletResponse>
   func unlockWallet(_ request: Lnrpc_UnlockWalletRequest, callOptions: CallOptions?) -> UnaryCall<Lnrpc_UnlockWalletRequest, Lnrpc_UnlockWalletResponse>
   func changePassword(_ request: Lnrpc_ChangePasswordRequest, callOptions: CallOptions?) -> UnaryCall<Lnrpc_ChangePasswordRequest, Lnrpc_ChangePasswordResponse>
 }
 
-internal final class Lnrpc_WalletUnlockerServiceClient: GRPCClient, Lnrpc_WalletUnlockerService {
-  internal let connection: ClientConnection
-  internal var defaultCallOptions: CallOptions
+public final class Lnrpc_WalletUnlockerServiceClient: GRPCClient, Lnrpc_WalletUnlockerService {
+  public let connection: ClientConnection
+  public var defaultCallOptions: CallOptions
 
   /// Creates a client for the lnrpc.WalletUnlocker service.
   ///
   /// - Parameters:
   ///   - connection: `ClientConnection` to the service host.
   ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
-  internal init(connection: ClientConnection, defaultCallOptions: CallOptions = CallOptions()) {
+  public init(connection: ClientConnection, defaultCallOptions: CallOptions = CallOptions()) {
     self.connection = connection
     self.defaultCallOptions = defaultCallOptions
   }
@@ -55,7 +55,7 @@ internal final class Lnrpc_WalletUnlockerServiceClient: GRPCClient, Lnrpc_Wallet
   ///   - request: Request to send to GenSeed.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func genSeed(_ request: Lnrpc_GenSeedRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_GenSeedRequest, Lnrpc_GenSeedResponse> {
+  public func genSeed(_ request: Lnrpc_GenSeedRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_GenSeedRequest, Lnrpc_GenSeedResponse> {
     return self.makeUnaryCall(path: "/lnrpc.WalletUnlocker/GenSeed",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -67,7 +67,7 @@ internal final class Lnrpc_WalletUnlockerServiceClient: GRPCClient, Lnrpc_Wallet
   ///   - request: Request to send to InitWallet.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func initWallet(_ request: Lnrpc_InitWalletRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_InitWalletRequest, Lnrpc_InitWalletResponse> {
+  public func initWallet(_ request: Lnrpc_InitWalletRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_InitWalletRequest, Lnrpc_InitWalletResponse> {
     return self.makeUnaryCall(path: "/lnrpc.WalletUnlocker/InitWallet",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -79,7 +79,7 @@ internal final class Lnrpc_WalletUnlockerServiceClient: GRPCClient, Lnrpc_Wallet
   ///   - request: Request to send to UnlockWallet.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func unlockWallet(_ request: Lnrpc_UnlockWalletRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_UnlockWalletRequest, Lnrpc_UnlockWalletResponse> {
+  public func unlockWallet(_ request: Lnrpc_UnlockWalletRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_UnlockWalletRequest, Lnrpc_UnlockWalletResponse> {
     return self.makeUnaryCall(path: "/lnrpc.WalletUnlocker/UnlockWallet",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -91,7 +91,7 @@ internal final class Lnrpc_WalletUnlockerServiceClient: GRPCClient, Lnrpc_Wallet
   ///   - request: Request to send to ChangePassword.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func changePassword(_ request: Lnrpc_ChangePasswordRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChangePasswordRequest, Lnrpc_ChangePasswordResponse> {
+  public func changePassword(_ request: Lnrpc_ChangePasswordRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChangePasswordRequest, Lnrpc_ChangePasswordResponse> {
     return self.makeUnaryCall(path: "/lnrpc.WalletUnlocker/ChangePassword",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -100,7 +100,7 @@ internal final class Lnrpc_WalletUnlockerServiceClient: GRPCClient, Lnrpc_Wallet
 }
 
 /// Usage: instantiate Lnrpc_LightningServiceClient, then call methods of this protocol to make API calls.
-internal protocol Lnrpc_LightningService {
+public protocol Lnrpc_LightningService {
   func walletBalance(_ request: Lnrpc_WalletBalanceRequest, callOptions: CallOptions?) -> UnaryCall<Lnrpc_WalletBalanceRequest, Lnrpc_WalletBalanceResponse>
   func channelBalance(_ request: Lnrpc_ChannelBalanceRequest, callOptions: CallOptions?) -> UnaryCall<Lnrpc_ChannelBalanceRequest, Lnrpc_ChannelBalanceResponse>
   func getTransactions(_ request: Lnrpc_GetTransactionsRequest, callOptions: CallOptions?) -> UnaryCall<Lnrpc_GetTransactionsRequest, Lnrpc_TransactionDetails>
@@ -157,16 +157,16 @@ internal protocol Lnrpc_LightningService {
   func bakeMacaroon(_ request: Lnrpc_BakeMacaroonRequest, callOptions: CallOptions?) -> UnaryCall<Lnrpc_BakeMacaroonRequest, Lnrpc_BakeMacaroonResponse>
 }
 
-internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningService {
-  internal let connection: ClientConnection
-  internal var defaultCallOptions: CallOptions
+public final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningService {
+  public let connection: ClientConnection
+  public var defaultCallOptions: CallOptions
 
   /// Creates a client for the lnrpc.Lightning service.
   ///
   /// - Parameters:
   ///   - connection: `ClientConnection` to the service host.
   ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
-  internal init(connection: ClientConnection, defaultCallOptions: CallOptions = CallOptions()) {
+  public init(connection: ClientConnection, defaultCallOptions: CallOptions = CallOptions()) {
     self.connection = connection
     self.defaultCallOptions = defaultCallOptions
   }
@@ -177,7 +177,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to WalletBalance.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func walletBalance(_ request: Lnrpc_WalletBalanceRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_WalletBalanceRequest, Lnrpc_WalletBalanceResponse> {
+  public func walletBalance(_ request: Lnrpc_WalletBalanceRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_WalletBalanceRequest, Lnrpc_WalletBalanceResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/WalletBalance",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -189,7 +189,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ChannelBalance.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func channelBalance(_ request: Lnrpc_ChannelBalanceRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChannelBalanceRequest, Lnrpc_ChannelBalanceResponse> {
+  public func channelBalance(_ request: Lnrpc_ChannelBalanceRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChannelBalanceRequest, Lnrpc_ChannelBalanceResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ChannelBalance",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -201,7 +201,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to GetTransactions.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func getTransactions(_ request: Lnrpc_GetTransactionsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_GetTransactionsRequest, Lnrpc_TransactionDetails> {
+  public func getTransactions(_ request: Lnrpc_GetTransactionsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_GetTransactionsRequest, Lnrpc_TransactionDetails> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/GetTransactions",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -213,7 +213,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to EstimateFee.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func estimateFee(_ request: Lnrpc_EstimateFeeRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_EstimateFeeRequest, Lnrpc_EstimateFeeResponse> {
+  public func estimateFee(_ request: Lnrpc_EstimateFeeRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_EstimateFeeRequest, Lnrpc_EstimateFeeResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/EstimateFee",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -225,7 +225,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to SendCoins.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func sendCoins(_ request: Lnrpc_SendCoinsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SendCoinsRequest, Lnrpc_SendCoinsResponse> {
+  public func sendCoins(_ request: Lnrpc_SendCoinsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SendCoinsRequest, Lnrpc_SendCoinsResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/SendCoins",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -237,7 +237,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ListUnspent.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func listUnspent(_ request: Lnrpc_ListUnspentRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListUnspentRequest, Lnrpc_ListUnspentResponse> {
+  public func listUnspent(_ request: Lnrpc_ListUnspentRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListUnspentRequest, Lnrpc_ListUnspentResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ListUnspent",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -250,7 +250,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
-  internal func subscribeTransactions(_ request: Lnrpc_GetTransactionsRequest, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_Transaction) -> Void) -> ServerStreamingCall<Lnrpc_GetTransactionsRequest, Lnrpc_Transaction> {
+  public func subscribeTransactions(_ request: Lnrpc_GetTransactionsRequest, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_Transaction) -> Void) -> ServerStreamingCall<Lnrpc_GetTransactionsRequest, Lnrpc_Transaction> {
     return self.makeServerStreamingCall(path: "/lnrpc.Lightning/SubscribeTransactions",
                                         request: request,
                                         callOptions: callOptions ?? self.defaultCallOptions,
@@ -263,7 +263,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to SendMany.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func sendMany(_ request: Lnrpc_SendManyRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SendManyRequest, Lnrpc_SendManyResponse> {
+  public func sendMany(_ request: Lnrpc_SendManyRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SendManyRequest, Lnrpc_SendManyResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/SendMany",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -275,7 +275,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to NewAddress.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func newAddress(_ request: Lnrpc_NewAddressRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_NewAddressRequest, Lnrpc_NewAddressResponse> {
+  public func newAddress(_ request: Lnrpc_NewAddressRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_NewAddressRequest, Lnrpc_NewAddressResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/NewAddress",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -287,7 +287,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to SignMessage.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func signMessage(_ request: Lnrpc_SignMessageRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SignMessageRequest, Lnrpc_SignMessageResponse> {
+  public func signMessage(_ request: Lnrpc_SignMessageRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SignMessageRequest, Lnrpc_SignMessageResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/SignMessage",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -299,7 +299,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to VerifyMessage.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func verifyMessage(_ request: Lnrpc_VerifyMessageRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_VerifyMessageRequest, Lnrpc_VerifyMessageResponse> {
+  public func verifyMessage(_ request: Lnrpc_VerifyMessageRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_VerifyMessageRequest, Lnrpc_VerifyMessageResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/VerifyMessage",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -311,7 +311,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ConnectPeer.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func connectPeer(_ request: Lnrpc_ConnectPeerRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ConnectPeerRequest, Lnrpc_ConnectPeerResponse> {
+  public func connectPeer(_ request: Lnrpc_ConnectPeerRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ConnectPeerRequest, Lnrpc_ConnectPeerResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ConnectPeer",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -323,7 +323,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to DisconnectPeer.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func disconnectPeer(_ request: Lnrpc_DisconnectPeerRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_DisconnectPeerRequest, Lnrpc_DisconnectPeerResponse> {
+  public func disconnectPeer(_ request: Lnrpc_DisconnectPeerRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_DisconnectPeerRequest, Lnrpc_DisconnectPeerResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/DisconnectPeer",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -335,7 +335,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ListPeers.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func listPeers(_ request: Lnrpc_ListPeersRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListPeersRequest, Lnrpc_ListPeersResponse> {
+  public func listPeers(_ request: Lnrpc_ListPeersRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListPeersRequest, Lnrpc_ListPeersResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ListPeers",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -348,7 +348,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
-  internal func subscribePeerEvents(_ request: Lnrpc_PeerEventSubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_PeerEvent) -> Void) -> ServerStreamingCall<Lnrpc_PeerEventSubscription, Lnrpc_PeerEvent> {
+  public func subscribePeerEvents(_ request: Lnrpc_PeerEventSubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_PeerEvent) -> Void) -> ServerStreamingCall<Lnrpc_PeerEventSubscription, Lnrpc_PeerEvent> {
     return self.makeServerStreamingCall(path: "/lnrpc.Lightning/SubscribePeerEvents",
                                         request: request,
                                         callOptions: callOptions ?? self.defaultCallOptions,
@@ -361,7 +361,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to GetInfo.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func getInfo(_ request: Lnrpc_GetInfoRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_GetInfoRequest, Lnrpc_GetInfoResponse> {
+  public func getInfo(_ request: Lnrpc_GetInfoRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_GetInfoRequest, Lnrpc_GetInfoResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/GetInfo",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -373,7 +373,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to PendingChannels.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func pendingChannels(_ request: Lnrpc_PendingChannelsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_PendingChannelsRequest, Lnrpc_PendingChannelsResponse> {
+  public func pendingChannels(_ request: Lnrpc_PendingChannelsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_PendingChannelsRequest, Lnrpc_PendingChannelsResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/PendingChannels",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -385,7 +385,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ListChannels.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func listChannels(_ request: Lnrpc_ListChannelsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListChannelsRequest, Lnrpc_ListChannelsResponse> {
+  public func listChannels(_ request: Lnrpc_ListChannelsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListChannelsRequest, Lnrpc_ListChannelsResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ListChannels",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -398,7 +398,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
-  internal func subscribeChannelEvents(_ request: Lnrpc_ChannelEventSubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_ChannelEventUpdate) -> Void) -> ServerStreamingCall<Lnrpc_ChannelEventSubscription, Lnrpc_ChannelEventUpdate> {
+  public func subscribeChannelEvents(_ request: Lnrpc_ChannelEventSubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_ChannelEventUpdate) -> Void) -> ServerStreamingCall<Lnrpc_ChannelEventSubscription, Lnrpc_ChannelEventUpdate> {
     return self.makeServerStreamingCall(path: "/lnrpc.Lightning/SubscribeChannelEvents",
                                         request: request,
                                         callOptions: callOptions ?? self.defaultCallOptions,
@@ -411,7 +411,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ClosedChannels.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func closedChannels(_ request: Lnrpc_ClosedChannelsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ClosedChannelsRequest, Lnrpc_ClosedChannelsResponse> {
+  public func closedChannels(_ request: Lnrpc_ClosedChannelsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ClosedChannelsRequest, Lnrpc_ClosedChannelsResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ClosedChannels",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -423,7 +423,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to OpenChannelSync.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func openChannelSync(_ request: Lnrpc_OpenChannelRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_OpenChannelRequest, Lnrpc_ChannelPoint> {
+  public func openChannelSync(_ request: Lnrpc_OpenChannelRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_OpenChannelRequest, Lnrpc_ChannelPoint> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/OpenChannelSync",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -436,7 +436,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
-  internal func openChannel(_ request: Lnrpc_OpenChannelRequest, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_OpenStatusUpdate) -> Void) -> ServerStreamingCall<Lnrpc_OpenChannelRequest, Lnrpc_OpenStatusUpdate> {
+  public func openChannel(_ request: Lnrpc_OpenChannelRequest, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_OpenStatusUpdate) -> Void) -> ServerStreamingCall<Lnrpc_OpenChannelRequest, Lnrpc_OpenStatusUpdate> {
     return self.makeServerStreamingCall(path: "/lnrpc.Lightning/OpenChannel",
                                         request: request,
                                         callOptions: callOptions ?? self.defaultCallOptions,
@@ -449,7 +449,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to FundingStateStep.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func fundingStateStep(_ request: Lnrpc_FundingTransitionMsg, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_FundingTransitionMsg, Lnrpc_FundingStateStepResp> {
+  public func fundingStateStep(_ request: Lnrpc_FundingTransitionMsg, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_FundingTransitionMsg, Lnrpc_FundingStateStepResp> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/FundingStateStep",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -464,7 +464,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ClientStreamingCall` with futures for the metadata and status.
-  internal func channelAcceptor(callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_ChannelAcceptRequest) -> Void) -> BidirectionalStreamingCall<Lnrpc_ChannelAcceptResponse, Lnrpc_ChannelAcceptRequest> {
+  public func channelAcceptor(callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_ChannelAcceptRequest) -> Void) -> BidirectionalStreamingCall<Lnrpc_ChannelAcceptResponse, Lnrpc_ChannelAcceptRequest> {
     return self.makeBidirectionalStreamingCall(path: "/lnrpc.Lightning/ChannelAcceptor",
                                                callOptions: callOptions ?? self.defaultCallOptions,
                                                handler: handler)
@@ -477,7 +477,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
-  internal func closeChannel(_ request: Lnrpc_CloseChannelRequest, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_CloseStatusUpdate) -> Void) -> ServerStreamingCall<Lnrpc_CloseChannelRequest, Lnrpc_CloseStatusUpdate> {
+  public func closeChannel(_ request: Lnrpc_CloseChannelRequest, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_CloseStatusUpdate) -> Void) -> ServerStreamingCall<Lnrpc_CloseChannelRequest, Lnrpc_CloseStatusUpdate> {
     return self.makeServerStreamingCall(path: "/lnrpc.Lightning/CloseChannel",
                                         request: request,
                                         callOptions: callOptions ?? self.defaultCallOptions,
@@ -490,7 +490,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to AbandonChannel.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func abandonChannel(_ request: Lnrpc_AbandonChannelRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_AbandonChannelRequest, Lnrpc_AbandonChannelResponse> {
+  public func abandonChannel(_ request: Lnrpc_AbandonChannelRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_AbandonChannelRequest, Lnrpc_AbandonChannelResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/AbandonChannel",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -505,7 +505,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ClientStreamingCall` with futures for the metadata and status.
-  internal func sendPayment(callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_SendResponse) -> Void) -> BidirectionalStreamingCall<Lnrpc_SendRequest, Lnrpc_SendResponse> {
+  public func sendPayment(callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_SendResponse) -> Void) -> BidirectionalStreamingCall<Lnrpc_SendRequest, Lnrpc_SendResponse> {
     return self.makeBidirectionalStreamingCall(path: "/lnrpc.Lightning/SendPayment",
                                                callOptions: callOptions ?? self.defaultCallOptions,
                                                handler: handler)
@@ -517,7 +517,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to SendPaymentSync.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func sendPaymentSync(_ request: Lnrpc_SendRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SendRequest, Lnrpc_SendResponse> {
+  public func sendPaymentSync(_ request: Lnrpc_SendRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SendRequest, Lnrpc_SendResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/SendPaymentSync",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -532,7 +532,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ClientStreamingCall` with futures for the metadata and status.
-  internal func sendToRoute(callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_SendResponse) -> Void) -> BidirectionalStreamingCall<Lnrpc_SendToRouteRequest, Lnrpc_SendResponse> {
+  public func sendToRoute(callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_SendResponse) -> Void) -> BidirectionalStreamingCall<Lnrpc_SendToRouteRequest, Lnrpc_SendResponse> {
     return self.makeBidirectionalStreamingCall(path: "/lnrpc.Lightning/SendToRoute",
                                                callOptions: callOptions ?? self.defaultCallOptions,
                                                handler: handler)
@@ -544,7 +544,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to SendToRouteSync.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func sendToRouteSync(_ request: Lnrpc_SendToRouteRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SendToRouteRequest, Lnrpc_SendResponse> {
+  public func sendToRouteSync(_ request: Lnrpc_SendToRouteRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_SendToRouteRequest, Lnrpc_SendResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/SendToRouteSync",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -556,7 +556,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to AddInvoice.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func addInvoice(_ request: Lnrpc_Invoice, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_Invoice, Lnrpc_AddInvoiceResponse> {
+  public func addInvoice(_ request: Lnrpc_Invoice, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_Invoice, Lnrpc_AddInvoiceResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/AddInvoice",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -568,7 +568,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ListInvoices.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func listInvoices(_ request: Lnrpc_ListInvoiceRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListInvoiceRequest, Lnrpc_ListInvoiceResponse> {
+  public func listInvoices(_ request: Lnrpc_ListInvoiceRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListInvoiceRequest, Lnrpc_ListInvoiceResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ListInvoices",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -580,7 +580,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to LookupInvoice.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func lookupInvoice(_ request: Lnrpc_PaymentHash, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_PaymentHash, Lnrpc_Invoice> {
+  public func lookupInvoice(_ request: Lnrpc_PaymentHash, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_PaymentHash, Lnrpc_Invoice> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/LookupInvoice",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -593,7 +593,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
-  internal func subscribeInvoices(_ request: Lnrpc_InvoiceSubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_Invoice) -> Void) -> ServerStreamingCall<Lnrpc_InvoiceSubscription, Lnrpc_Invoice> {
+  public func subscribeInvoices(_ request: Lnrpc_InvoiceSubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_Invoice) -> Void) -> ServerStreamingCall<Lnrpc_InvoiceSubscription, Lnrpc_Invoice> {
     return self.makeServerStreamingCall(path: "/lnrpc.Lightning/SubscribeInvoices",
                                         request: request,
                                         callOptions: callOptions ?? self.defaultCallOptions,
@@ -606,7 +606,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to DecodePayReq.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func decodePayReq(_ request: Lnrpc_PayReqString, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_PayReqString, Lnrpc_PayReq> {
+  public func decodePayReq(_ request: Lnrpc_PayReqString, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_PayReqString, Lnrpc_PayReq> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/DecodePayReq",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -618,7 +618,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ListPayments.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func listPayments(_ request: Lnrpc_ListPaymentsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListPaymentsRequest, Lnrpc_ListPaymentsResponse> {
+  public func listPayments(_ request: Lnrpc_ListPaymentsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ListPaymentsRequest, Lnrpc_ListPaymentsResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ListPayments",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -630,7 +630,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to DeleteAllPayments.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func deleteAllPayments(_ request: Lnrpc_DeleteAllPaymentsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_DeleteAllPaymentsRequest, Lnrpc_DeleteAllPaymentsResponse> {
+  public func deleteAllPayments(_ request: Lnrpc_DeleteAllPaymentsRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_DeleteAllPaymentsRequest, Lnrpc_DeleteAllPaymentsResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/DeleteAllPayments",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -642,7 +642,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to DescribeGraph.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func describeGraph(_ request: Lnrpc_ChannelGraphRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChannelGraphRequest, Lnrpc_ChannelGraph> {
+  public func describeGraph(_ request: Lnrpc_ChannelGraphRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChannelGraphRequest, Lnrpc_ChannelGraph> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/DescribeGraph",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -654,7 +654,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to GetChanInfo.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func getChanInfo(_ request: Lnrpc_ChanInfoRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChanInfoRequest, Lnrpc_ChannelEdge> {
+  public func getChanInfo(_ request: Lnrpc_ChanInfoRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChanInfoRequest, Lnrpc_ChannelEdge> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/GetChanInfo",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -666,7 +666,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to GetNodeInfo.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func getNodeInfo(_ request: Lnrpc_NodeInfoRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_NodeInfoRequest, Lnrpc_NodeInfo> {
+  public func getNodeInfo(_ request: Lnrpc_NodeInfoRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_NodeInfoRequest, Lnrpc_NodeInfo> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/GetNodeInfo",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -678,7 +678,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to QueryRoutes.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func queryRoutes(_ request: Lnrpc_QueryRoutesRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_QueryRoutesRequest, Lnrpc_QueryRoutesResponse> {
+  public func queryRoutes(_ request: Lnrpc_QueryRoutesRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_QueryRoutesRequest, Lnrpc_QueryRoutesResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/QueryRoutes",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -690,7 +690,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to GetNetworkInfo.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func getNetworkInfo(_ request: Lnrpc_NetworkInfoRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_NetworkInfoRequest, Lnrpc_NetworkInfo> {
+  public func getNetworkInfo(_ request: Lnrpc_NetworkInfoRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_NetworkInfoRequest, Lnrpc_NetworkInfo> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/GetNetworkInfo",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -702,7 +702,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to StopDaemon.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func stopDaemon(_ request: Lnrpc_StopRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_StopRequest, Lnrpc_StopResponse> {
+  public func stopDaemon(_ request: Lnrpc_StopRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_StopRequest, Lnrpc_StopResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/StopDaemon",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -715,7 +715,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
-  internal func subscribeChannelGraph(_ request: Lnrpc_GraphTopologySubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_GraphTopologyUpdate) -> Void) -> ServerStreamingCall<Lnrpc_GraphTopologySubscription, Lnrpc_GraphTopologyUpdate> {
+  public func subscribeChannelGraph(_ request: Lnrpc_GraphTopologySubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_GraphTopologyUpdate) -> Void) -> ServerStreamingCall<Lnrpc_GraphTopologySubscription, Lnrpc_GraphTopologyUpdate> {
     return self.makeServerStreamingCall(path: "/lnrpc.Lightning/SubscribeChannelGraph",
                                         request: request,
                                         callOptions: callOptions ?? self.defaultCallOptions,
@@ -728,7 +728,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to DebugLevel.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func debugLevel(_ request: Lnrpc_DebugLevelRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_DebugLevelRequest, Lnrpc_DebugLevelResponse> {
+  public func debugLevel(_ request: Lnrpc_DebugLevelRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_DebugLevelRequest, Lnrpc_DebugLevelResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/DebugLevel",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -740,7 +740,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to FeeReport.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func feeReport(_ request: Lnrpc_FeeReportRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_FeeReportRequest, Lnrpc_FeeReportResponse> {
+  public func feeReport(_ request: Lnrpc_FeeReportRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_FeeReportRequest, Lnrpc_FeeReportResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/FeeReport",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -752,7 +752,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to UpdateChannelPolicy.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func updateChannelPolicy(_ request: Lnrpc_PolicyUpdateRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_PolicyUpdateRequest, Lnrpc_PolicyUpdateResponse> {
+  public func updateChannelPolicy(_ request: Lnrpc_PolicyUpdateRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_PolicyUpdateRequest, Lnrpc_PolicyUpdateResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/UpdateChannelPolicy",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -764,7 +764,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ForwardingHistory.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func forwardingHistory(_ request: Lnrpc_ForwardingHistoryRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ForwardingHistoryRequest, Lnrpc_ForwardingHistoryResponse> {
+  public func forwardingHistory(_ request: Lnrpc_ForwardingHistoryRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ForwardingHistoryRequest, Lnrpc_ForwardingHistoryResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ForwardingHistory",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -776,7 +776,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ExportChannelBackup.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func exportChannelBackup(_ request: Lnrpc_ExportChannelBackupRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ExportChannelBackupRequest, Lnrpc_ChannelBackup> {
+  public func exportChannelBackup(_ request: Lnrpc_ExportChannelBackupRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ExportChannelBackupRequest, Lnrpc_ChannelBackup> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ExportChannelBackup",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -788,7 +788,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to ExportAllChannelBackups.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func exportAllChannelBackups(_ request: Lnrpc_ChanBackupExportRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChanBackupExportRequest, Lnrpc_ChanBackupSnapshot> {
+  public func exportAllChannelBackups(_ request: Lnrpc_ChanBackupExportRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChanBackupExportRequest, Lnrpc_ChanBackupSnapshot> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/ExportAllChannelBackups",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -800,7 +800,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to VerifyChanBackup.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func verifyChanBackup(_ request: Lnrpc_ChanBackupSnapshot, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChanBackupSnapshot, Lnrpc_VerifyChanBackupResponse> {
+  public func verifyChanBackup(_ request: Lnrpc_ChanBackupSnapshot, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_ChanBackupSnapshot, Lnrpc_VerifyChanBackupResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/VerifyChanBackup",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -812,7 +812,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to RestoreChannelBackups.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func restoreChannelBackups(_ request: Lnrpc_RestoreChanBackupRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_RestoreChanBackupRequest, Lnrpc_RestoreBackupResponse> {
+  public func restoreChannelBackups(_ request: Lnrpc_RestoreChanBackupRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_RestoreChanBackupRequest, Lnrpc_RestoreBackupResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/RestoreChannelBackups",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -825,7 +825,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   ///   - handler: A closure called when each response is received from the server.
   /// - Returns: A `ServerStreamingCall` with futures for the metadata and status.
-  internal func subscribeChannelBackups(_ request: Lnrpc_ChannelBackupSubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_ChanBackupSnapshot) -> Void) -> ServerStreamingCall<Lnrpc_ChannelBackupSubscription, Lnrpc_ChanBackupSnapshot> {
+  public func subscribeChannelBackups(_ request: Lnrpc_ChannelBackupSubscription, callOptions: CallOptions? = nil, handler: @escaping (Lnrpc_ChanBackupSnapshot) -> Void) -> ServerStreamingCall<Lnrpc_ChannelBackupSubscription, Lnrpc_ChanBackupSnapshot> {
     return self.makeServerStreamingCall(path: "/lnrpc.Lightning/SubscribeChannelBackups",
                                         request: request,
                                         callOptions: callOptions ?? self.defaultCallOptions,
@@ -838,7 +838,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
   ///   - request: Request to send to BakeMacaroon.
   ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
   /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
-  internal func bakeMacaroon(_ request: Lnrpc_BakeMacaroonRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_BakeMacaroonRequest, Lnrpc_BakeMacaroonResponse> {
+  public func bakeMacaroon(_ request: Lnrpc_BakeMacaroonRequest, callOptions: CallOptions? = nil) -> UnaryCall<Lnrpc_BakeMacaroonRequest, Lnrpc_BakeMacaroonResponse> {
     return self.makeUnaryCall(path: "/lnrpc.Lightning/BakeMacaroon",
                               request: request,
                               callOptions: callOptions ?? self.defaultCallOptions)
@@ -847,7 +847,7 @@ internal final class Lnrpc_LightningServiceClient: GRPCClient, Lnrpc_LightningSe
 }
 
 /// To build a server, implement a class that conforms to this protocol.
-internal protocol Lnrpc_WalletUnlockerProvider: CallHandlerProvider {
+public protocol Lnrpc_WalletUnlockerProvider: CallHandlerProvider {
   func genSeed(request: Lnrpc_GenSeedRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_GenSeedResponse>
   func initWallet(request: Lnrpc_InitWalletRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_InitWalletResponse>
   func unlockWallet(request: Lnrpc_UnlockWalletRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_UnlockWalletResponse>
@@ -855,11 +855,11 @@ internal protocol Lnrpc_WalletUnlockerProvider: CallHandlerProvider {
 }
 
 extension Lnrpc_WalletUnlockerProvider {
-  internal var serviceName: String { return "lnrpc.WalletUnlocker" }
+  public var serviceName: String { return "lnrpc.WalletUnlocker" }
 
   /// Determines, calls and returns the appropriate request handler, depending on the request's method.
   /// Returns nil for methods not handled by this service.
-  internal func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+  public func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
     switch methodName {
     case "GenSeed":
       return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
@@ -895,7 +895,7 @@ extension Lnrpc_WalletUnlockerProvider {
 }
 
 /// To build a server, implement a class that conforms to this protocol.
-internal protocol Lnrpc_LightningProvider: CallHandlerProvider {
+public protocol Lnrpc_LightningProvider: CallHandlerProvider {
   func walletBalance(request: Lnrpc_WalletBalanceRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_WalletBalanceResponse>
   func channelBalance(request: Lnrpc_ChannelBalanceRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_ChannelBalanceResponse>
   func getTransactions(request: Lnrpc_GetTransactionsRequest, context: StatusOnlyCallContext) -> EventLoopFuture<Lnrpc_TransactionDetails>
@@ -953,11 +953,11 @@ internal protocol Lnrpc_LightningProvider: CallHandlerProvider {
 }
 
 extension Lnrpc_LightningProvider {
-  internal var serviceName: String { return "lnrpc.Lightning" }
+  public var serviceName: String { return "lnrpc.Lightning" }
 
   /// Determines, calls and returns the appropriate request handler, depending on the request's method.
   /// Returns nil for methods not handled by this service.
-  internal func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+  public func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
     switch methodName {
     case "WalletBalance":
       return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in

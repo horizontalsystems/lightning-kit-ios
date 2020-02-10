@@ -20,6 +20,7 @@
 		D0BF7DF523ED78350048B3E8 /* rpc.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF7DF323ED78350048B3E8 /* rpc.pb.swift */; };
 		D0BF7DF823EFFF240048B3E8 /* ConnectivityStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF7DF723EFFF240048B3E8 /* ConnectivityStateManager.swift */; };
 		D0BF7DFA23F004160048B3E8 /* LndNioConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF7DF923F004160048B3E8 /* LndNioConnection.swift */; };
+		D0BF7DFC23F14BEB0048B3E8 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0BF7DFB23F14BEB0048B3E8 /* Data.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		D0BF7DF323ED78350048B3E8 /* rpc.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = rpc.pb.swift; sourceTree = "<group>"; };
 		D0BF7DF723EFFF240048B3E8 /* ConnectivityStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectivityStateManager.swift; sourceTree = "<group>"; };
 		D0BF7DF923F004160048B3E8 /* LndNioConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LndNioConnection.swift; sourceTree = "<group>"; };
+		D0BF7DFB23F14BEB0048B3E8 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 			isa = PBXGroup;
 			children = (
 				D05C38BA23E98C1D00C4C28B /* EventLoopFuture.swift */,
+				D0BF7DFB23F14BEB0048B3E8 /* Data.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -202,6 +205,7 @@
 				D0BF7DFA23F004160048B3E8 /* LndNioConnection.swift in Sources */,
 				11B35C4874CF231EA3E7E68D /* Kit.swift in Sources */,
 				D05C38B623E9681A00C4C28B /* ILndNode.swift in Sources */,
+				D0BF7DFC23F14BEB0048B3E8 /* Data.swift in Sources */,
 				D0BF7DF823EFFF240048B3E8 /* ConnectivityStateManager.swift in Sources */,
 				11B357BB4BD04E517EF258F4 /* RpcCredentials.swift in Sources */,
 				D0BF7DF523ED78350048B3E8 /* rpc.pb.swift in Sources */,

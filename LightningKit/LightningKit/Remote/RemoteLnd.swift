@@ -140,29 +140,29 @@ class RemoteLnd: ILndNode {
     }
 
     func invoicesObservable() -> Observable<Lnrpc_Invoice> {
-        connection.serverStreamCall() { client, handler in
+        connection.serverStreamCall() { client, handler -> ServerStreamingCall<Lnrpc_InvoiceSubscription, Lnrpc_Invoice> in
             let request = Lnrpc_InvoiceSubscription()
 
-            _ = client.subscribeInvoices(request, handler: handler)
+            return client.subscribeInvoices(request, handler: handler)
         }
     }
 
     func channelsObservable() -> Observable<Lnrpc_ChannelEventUpdate> {
-        connection.serverStreamCall() { client, handler in
+        connection.serverStreamCall() { client, handler -> ServerStreamingCall<Lnrpc_ChannelEventSubscription, Lnrpc_ChannelEventUpdate> in
             let channelEventSubscription = Lnrpc_ChannelEventSubscription()
 
-            _ = client.subscribeChannelEvents(channelEventSubscription, handler: handler)
+            return client.subscribeChannelEvents(channelEventSubscription, handler: handler)
         }
     }
 
     func openChannel(nodePubKey: Data, amount: Int64) -> Observable<Lnrpc_OpenStatusUpdate> {
-        connection.serverStreamCall() { client, handler in
+        connection.serverStreamCall() { client, handler -> ServerStreamingCall<Lnrpc_OpenChannelRequest, Lnrpc_OpenStatusUpdate> in
             var request = Lnrpc_OpenChannelRequest()
             request.nodePubkey = nodePubKey
             request.satPerByte = 2 // todo: extract as param
             request.localFundingAmount = amount
 
-            _ = client.openChannel(request, handler: handler)
+            return client.openChannel(request, handler: handler)
         }
     }
 
@@ -173,7 +173,7 @@ class RemoteLnd: ILndNode {
             throw ArgumentError.wrongChannelPoint
         }
 
-        return connection.serverStreamCall { client, handler in
+        return connection.serverStreamCall { client, handler -> ServerStreamingCall<Lnrpc_CloseChannelRequest, Lnrpc_CloseStatusUpdate> in
             var channelPoint = Lnrpc_ChannelPoint()
             channelPoint.fundingTxidStr = String(channelPointParts[0])
             channelPoint.outputIndex = outputIndex
@@ -183,7 +183,7 @@ class RemoteLnd: ILndNode {
             request.satPerByte = 2 // todo: extract as param
             request.force = forceClose
 
-            _ = client.closeChannel(request, handler: handler)
+            return client.closeChannel(request, handler: handler)
         }
     }
 

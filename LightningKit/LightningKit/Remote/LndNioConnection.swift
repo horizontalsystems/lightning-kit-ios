@@ -51,15 +51,24 @@ class LndNioConnection {
         return callFunction(lightningClient).toSingle()
     }
     
-    func serverStreamCall<T>(_ callFunction: @escaping (Lnrpc_LightningServiceClient, @escaping (T) -> Void) -> Void) -> Observable<T> {
+    func serverStreamCall<A, T>(_ callFunction: @escaping (Lnrpc_LightningServiceClient, @escaping (T) -> Void) -> ServerStreamingCall<A, T>) -> Observable<T> {
         if let available = self.available, !available {
             return Observable.error(GRPCStatus(code: .unavailable, message: "Not connected to remote node"))
         }
 
         return Observable<T>.create { emitter in
-            callFunction(self.lightningClient) { response in
+            let call = callFunction(self.lightningClient) { response in
                 emitter.onNext(response)
             }
+            
+            call.status.whenSuccess({ status in
+                if status != .ok {
+                    emitter.onError(status)
+                }
+                
+            })
+            
+            call.status.whenComplete({ _ in emitter.onCompleted() })
             
             return Disposables.create()
         }
