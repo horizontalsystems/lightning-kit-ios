@@ -114,8 +114,6 @@ public class Kit {
 }
 
 public extension Kit {
-    static var lightningKitLocalLnd: Kit? = nil
-    
     static func validateRemoteConnection(rpcCredentials: RpcCredentials) -> Single<Void> {
         do {
             let remoteLndNode = try RemoteLnd(rpcCredentials: rpcCredentials)
@@ -124,13 +122,6 @@ public extension Kit {
         } catch {
             return Single.error(error)
         }
-    }
-
-    static func createLocal(credentials: LocalNodeCredentials) -> Single<[String]> {
-        let localLnd = LocalLnd(credentials: credentials)
-        lightningKitLocalLnd = Kit(lndNode: localLnd)
-
-        return localLnd.start().flatMap { localLnd.createWallet(password: credentials.password) }
     }
 
     static func remote(rpcCredentials: RpcCredentials) throws -> Kit {
